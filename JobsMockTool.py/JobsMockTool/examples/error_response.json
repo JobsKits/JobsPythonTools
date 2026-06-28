@@ -1,0 +1,8 @@
+{
+  "status": 400,
+  "errorCode": "DEMO_ERROR",
+  "message": "模拟错误",
+  "method": "",
+  "path": "",
+  "timestamp": ""
+}

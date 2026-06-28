@@ -1,0 +1,17 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "title": "HTTP Methods Demo Catalog",
+    "baseUrl": "http://127.0.0.1:18080",
+    "items": [
+      {"method": "GET", "path": "/api/get/dashboard", "description": "查询仪表盘数据并渲染卡片"},
+      {"method": "POST", "path": "/api/post/orders", "description": "提交筛选条件并返回订单列表"},
+      {"method": "PUT", "path": "/api/put/profile", "description": "整包更新用户资料"},
+      {"method": "PATCH", "path": "/api/patch/settings", "description": "局部更新用户设置"},
+      {"method": "DELETE", "path": "/api/delete/order/ORD-20260324-0001", "description": "删除指定订单"},
+      {"method": "UPLOAD", "path": "/api/upload/file", "description": "multipart/form-data 文件上传"},
+      {"method": "DOWNLOAD", "path": "/api/download/file?fileName=download-demo.txt", "description": "下载文本或图片资源"}
+    ]
+  }
+}

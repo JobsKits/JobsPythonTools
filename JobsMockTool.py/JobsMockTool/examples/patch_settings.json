@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "message": "settings patched",
+  "data": {
+    "settings": {
+      "theme": "dark",
+      "notifications": true,
+      "fontScale": 1.1
+    },
+    "requestEcho": {}
+  }
+}

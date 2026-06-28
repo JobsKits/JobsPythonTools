@@ -1,0 +1,234 @@
+{
+  "app": "JobsMockTool",
+  "version": "4.0",
+  "server_mode": "shared_port",
+  "shared_port": "8765",
+  "endpoints": [
+    {
+      "name": "用户列表",
+      "method": "GET",
+      "path": "/api/users",
+      "port": "8765",
+      "headers_text": "{\n  \"Content-Type\": \"application/json; charset=utf-8\",\n  \"Access-Control-Allow-Origin\": \"*\",\n  \"Access-Control-Allow-Methods\": \"GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD\",\n  \"Access-Control-Allow-Headers\": \"Content-Type, Authorization, X-Requested-With\"\n}",
+      "params_text": "{\n  \"page\": 1,\n  \"pageSize\": 10,\n  \"type\": \"normal\"\n}",
+      "cases": [
+        {
+          "name": "默认用户列表",
+          "status_code": 200,
+          "match_text": "{}",
+          "root_node": {
+            "key": "root",
+            "node_type": "dict",
+            "value": "",
+            "children": [
+              {
+                "key": "code",
+                "node_type": "number",
+                "value": "200",
+                "children": []
+              },
+              {
+                "key": "message",
+                "node_type": "string",
+                "value": "success",
+                "children": []
+              },
+              {
+                "key": "data",
+                "node_type": "dict",
+                "value": "",
+                "children": [
+                  {
+                    "key": "items",
+                    "node_type": "list",
+                    "value": "",
+                    "children": [
+                      {
+                        "key": "",
+                        "node_type": "dict",
+                        "value": "",
+                        "children": [
+                          {
+                            "key": "id",
+                            "node_type": "number",
+                            "value": "1",
+                            "children": []
+                          },
+                          {
+                            "key": "name",
+                            "node_type": "string",
+                            "value": "Alice",
+                            "children": []
+                          },
+                          {
+                            "key": "type",
+                            "node_type": "string",
+                            "value": "normal",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "key": "total",
+                    "node_type": "number",
+                    "value": "1",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "VIP 用户列表",
+          "status_code": 200,
+          "match_text": "{\n  \"type\": \"vip\"\n}",
+          "root_node": {
+            "key": "root",
+            "node_type": "dict",
+            "value": "",
+            "children": [
+              {
+                "key": "code",
+                "node_type": "number",
+                "value": "200",
+                "children": []
+              },
+              {
+                "key": "message",
+                "node_type": "string",
+                "value": "success",
+                "children": []
+              },
+              {
+                "key": "data",
+                "node_type": "dict",
+                "value": "",
+                "children": [
+                  {
+                    "key": "items",
+                    "node_type": "list",
+                    "value": "",
+                    "children": [
+                      {
+                        "key": "",
+                        "node_type": "dict",
+                        "value": "",
+                        "children": [
+                          {
+                            "key": "id",
+                            "node_type": "number",
+                            "value": "2",
+                            "children": []
+                          },
+                          {
+                            "key": "name",
+                            "node_type": "string",
+                            "value": "Bob",
+                            "children": []
+                          },
+                          {
+                            "key": "type",
+                            "node_type": "string",
+                            "value": "vip",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "key": "total",
+                    "node_type": "number",
+                    "value": "1",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "创建订单",
+      "method": "POST",
+      "path": "/api/orders",
+      "port": "8765",
+      "headers_text": "{\n  \"Content-Type\": \"application/json; charset=utf-8\",\n  \"Access-Control-Allow-Origin\": \"*\",\n  \"Access-Control-Allow-Methods\": \"GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD\",\n  \"Access-Control-Allow-Headers\": \"Content-Type, Authorization, X-Requested-With\"\n}",
+      "params_text": "{\n  \"skuId\": \"A001\",\n  \"count\": 1\n}",
+      "cases": [
+        {
+          "name": "创建成功",
+          "status_code": 201,
+          "match_text": "{}",
+          "root_node": {
+            "key": "root",
+            "node_type": "dict",
+            "value": "",
+            "children": [
+              {
+                "key": "code",
+                "node_type": "number",
+                "value": "201",
+                "children": []
+              },
+              {
+                "key": "message",
+                "node_type": "string",
+                "value": "created",
+                "children": []
+              },
+              {
+                "key": "data",
+                "node_type": "dict",
+                "value": "",
+                "children": [
+                  {
+                    "key": "orderId",
+                    "node_type": "string",
+                    "value": "MOCK-001",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "参数错误",
+          "status_code": 400,
+          "match_text": "{\n  \"body.count\": 0\n}",
+          "root_node": {
+            "key": "root",
+            "node_type": "dict",
+            "value": "",
+            "children": [
+              {
+                "key": "code",
+                "node_type": "number",
+                "value": "400",
+                "children": []
+              },
+              {
+                "key": "message",
+                "node_type": "string",
+                "value": "count 不能为 0",
+                "children": []
+              },
+              {
+                "key": "data",
+                "node_type": "null",
+                "value": "",
+                "children": []
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "earth_url": "https://dragonir.github.io/3d/#/earth"
+}

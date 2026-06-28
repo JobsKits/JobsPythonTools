@@ -1,0 +1,8 @@
+{
+  "code": 200,
+  "message": "delete success",
+  "data": {
+    "deletedOrderId": "",
+    "deleted": true
+  }
+}
