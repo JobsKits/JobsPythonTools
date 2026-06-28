@@ -1,0 +1,16 @@
+[submodule "JobsAppTrafficMonitor.py"]
+	path = JobsAppTrafficMonitor.py
+	url = git@github.com:JobsKits/JobsAppTrafficMonitor.git
+	branch = main
+[submodule "JobsMockTool.py"]
+	path = JobsMockTool.py
+	url = git@github.com:JobsKits/JobsMockTool.git
+	branch = main
+[submodule "JobsReverseIPA.py"]
+	path = JobsReverseIPA.py
+	url = git@github.com:JobsKits/JobsReverseIPA.git
+	branch = main
+[submodule "LANFileServer.py"]
+	path = LANFileServer.py
+	url = git@github.com:JobsKits/LANFileServer.git
+	branch = main
