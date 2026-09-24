@@ -35,6 +35,7 @@ SUBMODULE_REPO_URLS=(
   "https://github.com/JobsKits/JobsRemoteHost|JobsRemoteHost.py"
   "https://github.com/JobsKits/JobsReverseIPA|JobsReverseIPA.py"
   "https://github.com/JobsKits/LANFileServer|LANFileServer.py"
+  "https://github.com/JobsKits/JobsRussianTrainer|JobsRussianTrainer.py"
   # 以后新增仓库，只写浏览器页面地址即可。
   # "https://github.com/JobsKits/xxx"
 )
