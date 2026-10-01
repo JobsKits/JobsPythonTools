@@ -19,3 +19,15 @@
 	path = LANFileServer.py
 	url = git@github.com:JobsKits/LANFileServer.git
 	branch = main
+[submodule "语言学习.py/JobsEnglishWordBook.py"]
+	path = 语言学习.py/JobsEnglishWordBook.py
+	url = git@github.com:JobsKits/JobsEnglishWordBook.git
+	branch = main
+[submodule "语言学习.py/JobsKanjiByJap.py"]
+	path = 语言学习.py/JobsKanjiByJap.py
+	url = git@github.com:JobsKits/JobsKanjiByJap.git
+	branch = main
+[submodule "语言学习.py/JobsRussianTrainer.py"]
+	path = 语言学习.py/JobsRussianTrainer.py
+	url = git@github.com:JobsKits/JobsRussianTrainer.git
+	branch = main
