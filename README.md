@@ -8,7 +8,7 @@
 
 ## 🔥 <font id=前言>前言</font>
 
-`JobsPythonTools.py` 是 Jobs 本地 [**Python**](https://www.python.org) 桌面工具集合仓库，当前收口了局域网文件共享、Mock API、IPA 静态分析、App 流量监控四类工具。
+`JobsPythonTools.py` 是 Jobs 本地 [**Python**](https://www.python.org) 桌面工具集合仓库，包含局域网文件共享、Mock API、IPA 静态分析、App 流量监控及 Codex 账户切换等工具。
 
 每个工具都采用“外层交付目录 + 内层 Python 工程”的结构：外层放 `README.md` 和双击入口脚本，内层放源码、依赖、资源、测试和构建配置，外层 `dist/YYYY.MM.DD HH-mm-ss/` 保存交付产物。
 
@@ -20,6 +20,7 @@
 | `JobsMockTool` | `./JobsMockTool.py/` | 图形化配置本地 Mock API，用于前端、客户端和脚本联调。 | `./JobsMockTool.py/【MacOS】📦生成dmg.command`、`./JobsMockTool.py/【Windows】📦生成exe.bat` |
 | `JobsReverseIPA` | `./JobsReverseIPA.py/` | 对授权 `.ipa` 做静态分析、环境体检、资源和敏感字符串扫描。 | `./JobsReverseIPA.py/【MacOS】📦生成dmg.command`、`./JobsReverseIPA.py/【Windows】📦生成exe.bat` |
 | `JobsAppTrafficMonitor` | `./JobsAppTrafficMonitor.py/` | 按 App 实时统计 macOS / Windows 上下行流量。 | `./JobsAppTrafficMonitor.py/【MacOS】📦生成dmg.command`、`./JobsAppTrafficMonitor.py/【Windows】📦生成exe.bat` |
+| `JobsCodexAccountSwitcher` | `./JobsCodexAccountSwitcher.py/` | 保存 Codex 文件登录态（口令保护可选）、退出后切换与重启；桌面兼容需核验。 | [说明](./JobsCodexAccountSwitcher.py/README.md)、双端打包入口 |
 
 ## 二、目录结构 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
@@ -31,7 +32,8 @@
 ├── LANFileServer.py/
 ├── JobsMockTool.py/
 ├── JobsReverseIPA.py/
-└── JobsAppTrafficMonitor.py/
+├── JobsAppTrafficMonitor.py/
+└── JobsCodexAccountSwitcher.py/
 ```
 
 - `./README.md`：当前整库说明和工具索引。
@@ -41,7 +43,7 @@
 
 ## 三、运行与打包 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
-### 3.1、macOS
+### 3.1、macOS <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
 macOS 安装包必须在 macOS 本机生成。进入目标工具目录后，双击或执行对应入口：
 
@@ -51,7 +53,7 @@ macOS 安装包必须在 macOS 本机生成。进入目标工具目录后，双�
 
 脚本通常会创建或复用 `.venv` / `.venv-universal2`，按需安装依赖，再通过 [**PyInstaller**](https://pyinstaller.org/) 生成 `.app` 和 `.dmg`。涉及清理旧 `build` / `dist` 的脚本，会在内部自述里提示影响范围，部分工具要求输入 `YES` 才继续。
 
-### 3.2、Windows
+### 3.2、Windows <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
 Windows 可执行程序必须在 Windows 本机生成或启动。进入目标工具目录后，双击或执行对应入口：
 
@@ -102,7 +104,7 @@ output/
 
 第一层交付目录与平台打包脚本同层保存 `dist/`，以及最新 APP / DMG 的相对符号链接（Mac）或 EXE / 分发包的 `.lnk`（Windows）。双击快捷方式即可接触成品，真实文件保留在 `dist/`；成功构建自动更新入口，清理旧产物时移除对应旧入口。尚无成品时不生成无效快捷方式。
 
-## 七、上传 README 演示视频
+## 七、上传 README 演示视频 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
 双击 [上传 GitHub 视频附件脚本](./【MacOS】🎬上传GitHub视频附件.command)，按回车确认，再输入 GitHub 仓库首页地址并拖入本地视频。支持 MP4 / MOV / WEBM；也可通过命令行传入这两个参数。需要安装 [**GitHub CLI**](https://cli.github.com/)，当前账号须有目标仓库写权限；未登录时脚本会引导登录。
 
