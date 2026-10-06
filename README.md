@@ -8,6 +8,8 @@
 
 ## 🔥 <font id=前言>前言</font>
 
+本目录中可独立运行的 `.command` 入口先显示内置自述：标题红色加粗，编号正文蓝色且不加粗；在终端按回车确认后才进入原有流程，按 `Ctrl+C` 取消。非彩色终端显示纯文本；没有可交互输入时停止，避免确认缺失后继续执行。
+
 `JobsPythonTools.py` 是 Jobs 本地 [**Python**](https://www.python.org) 桌面工具集合仓库，包含局域网文件共享、Mock API、IPA 静态分析、App 流量监控及 Codex 账户切换等工具。
 
 每个工具都采用“外层交付目录 + 内层 Python 工程”的结构：外层放 `README.md` 和双击入口脚本，内层放源码、依赖、资源、测试和构建配置，外层 `dist/YYYY.MM.DD HH-mm-ss/` 保存交付产物。
