@@ -21,7 +21,7 @@
 	branch = main
 [submodule "JobsCodexAccountSwitcher"]
 	path = JobsCodexAccountSwitcher.py
-	url = git@github.com:JobsKits/JobsCodexAccountSwitcher.git
+	url = ../JobsCodexAccountSwitcher.git
 [submodule "JobsSystemMonitor.py"]
 	path = JobsSystemMonitor.py
 	url = ../JobsSystemMonitor.git
