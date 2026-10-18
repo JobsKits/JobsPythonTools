@@ -2,11 +2,34 @@
 
 ![Jobs出品，必属精品](https://picsum.photos/1500/400)
 
-[toc]
+<!-- jobs-toc:start -->
+<!-- jobs-toc:source {"v":2,"token":"[toc]"} -->
+<details>
+<summary>📚 目录（点击展开 / 收起）</summary>
+
+- [🔥 前言](#jobs-toc-heading-1)
+- [一、工具总览](#jobs-toc-heading-2)
+- [二、目录结构](#jobs-toc-heading-3)
+- [三、运行与打包](#jobs-toc-heading-4)
+  - [3.1、macOS](#jobs-toc-heading-5)
+  - [3.2、Windows](#jobs-toc-heading-6)
+- [四、输出与忽略规则](#jobs-toc-heading-7)
+- [五、风险边界](#jobs-toc-heading-8)
+- [六、维护说明](#jobs-toc-heading-9)
+- [七、上传 README 演示视频](#jobs-toc-heading-10)
+- [八、Git 子模块脚本](#git-submodule-scripts)
+  - [【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](#jobs-toc-heading-12)
+  - [【MacOS】🧾更新gitmodules.command](#jobs-toc-heading-13)
+- [九、本仓目录与脚本入口](#repository-layout-and-entrypoints)
+  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-15)
+  - [【Windows】📦生成exe.bat](#jobs-toc-heading-16)
+
+</details>
+<!-- jobs-toc:end -->
 
 ---
 
-## 🔥 <font id=前言>前言</font>
+## <span id="jobs-toc-heading-1" data-jobs-toc="v2">🔥 <font id=前言>前言</font></span><!-- jobs-toc:heading-end -->
 
 子仓下载与关联操作见 [Git 子模块脚本](#git-submodule-scripts)。
 
@@ -37,11 +60,11 @@
 
 `path` 是本地目录，`url` 是远端仓库位置；相对 URL 跟随父仓默认远端的平台、组织、协议与端口，前提是该平台已有对应子仓及父仓锁定的提交。已有克隆须核对默认远端和本地子模块配置，仅新增 remote 不会切换线路。
 
-**下载脚本的 Gitee 传输规则：** `【MacOS】⏬下载配置当前Git子模块.command` 在本次运行中，将 `git@gitee.com:`、`ssh://git@gitee.com/`、`ssh://git@gitee.com:22/` 开头的标准地址统一通过 `https://gitee.com/` 访问，保留账号、真实仓名和分支；即使设置 `GIT_URL_STYLE=ssh`，这类 Gitee 地址仍使用 HTTPS。首次 `clone --recurse-submodules` 和后续递归同步都继承该规则，历史子模块中的 SSH 地址无需新电脑先配置 SSH 密钥。
+**下载脚本的 Gitee 传输规则：** `【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command` 在本次运行中，将 `git@gitee.com:`、`ssh://git@gitee.com/`、`ssh://git@gitee.com:22/` 开头的标准地址统一通过 `https://gitee.com/` 访问，保留账号、真实仓名和分支；即使设置 `GIT_URL_STYLE=ssh`，这类 Gitee 地址仍使用 HTTPS。各层首次克隆和后续拉取都继承该规则，历史子模块中的 SSH 地址无需新电脑先配置 SSH 密钥。
 
 规则通过追加进程级 `GIT_CONFIG_COUNT` / `url.https://gitee.com/.insteadOf` 配置传给子进程，不写入全局 Git 配置，也不依赖其它工程路径。GitHub、其它主机及非 `22` 的自定义 SSH 端口保持原规则。克隆或递归更新失败会返回非零状态，停止本轮同步并保留错误；不会再输出该项同步成功。各仓清单与浅克隆参数保留；全量删除重建须输入 `YES` 确认，范围限定为清单目标及对应旧仓名目录。
 
-## 一、工具总览 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-2" data-jobs-toc="v2">一、工具总览 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 | 工具 | 目录 | 核心用途 | 主要入口 |
 | --- | --- | --- | --- |
@@ -54,7 +77,7 @@
 
 账户切换与 Token 监控是两个独立 Python 工程，各有源码、依赖、测试、APP / EXE 和分发包。Token 工具不依赖账户工具；可以只安装其中一个。`JobsCodexTokenMonitor.py/` 当前由本总仓直接管理，尚未配置独立远端或登记为子模块，`./.gitmodules` 不包含虚构的下载地址。
 
-## 二、目录结构 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-3" data-jobs-toc="v2">二、目录结构 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 ```text
 .
@@ -74,9 +97,9 @@
 - `./icon.png`：仓库级图标资源。
 - `./*/README.md`：每个工具自己的完整说明，包含运行方式、输出目录、日志位置和风险边界。
 
-## 三、运行与打包 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-4" data-jobs-toc="v2">三、运行与打包 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
-### 3.1、macOS <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+### <span id="jobs-toc-heading-5" data-jobs-toc="v2">3.1、macOS <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 macOS 安装包必须在 macOS 本机生成。进入目标工具目录后，双击或执行对应入口：
 
@@ -86,7 +109,7 @@ macOS 安装包必须在 macOS 本机生成。进入目标工具目录后，双�
 
 脚本通常会创建或复用 `.venv` / `.venv-universal2`，按需安装依赖，再通过 [**PyInstaller**](https://pyinstaller.org/) 生成 `.app` 和 `.dmg`。涉及清理旧 `build` / `dist` 的脚本，会在内部自述里提示影响范围，部分工具要求输入 `YES` 才继续。
 
-### 3.2、Windows <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+### <span id="jobs-toc-heading-6" data-jobs-toc="v2">3.2、Windows <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 Windows 可执行程序必须在 Windows 本机生成或启动。进入目标工具目录后，双击或执行对应入口：
 
@@ -96,7 +119,7 @@ Windows 可执行程序必须在 Windows 本机生成或启动。进入目标工
 
 不同工具的 Windows 入口行为略有差异：`JobsMockTool`、`JobsReverseIPA`、`JobsAppTrafficMonitor` 以打包 `.exe` 为主；`LANFileServer` 默认启动图形界面，内部保留 `build-exe` 打包模式。
 
-## 四、输出与忽略规则 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-7" data-jobs-toc="v2">四、输出与忽略规则 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 构建产物默认不入库，根目录 `.gitignore` 已覆盖这些类型：
 
@@ -116,7 +139,7 @@ output/
 
 源码、`README.md`、`requirements.txt`、`pyproject.toml`、`*.spec`、资源文件和打包入口脚本保留入库。
 
-## 五、风险边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-8" data-jobs-toc="v2">五、风险边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 - `LANFileServer` 会把选中的文件 / 文件夹暴露给同一局域网设备，不要共享隐私目录、密码文件或浏览器数据。
 - `JobsReverseIPA` 只用于用户有权审计的 `.ipa` 文件，不用于未授权分析。
@@ -124,7 +147,7 @@ output/
 - `JobsAppTrafficMonitor` 只读取连接元数据与字节计数，不读取、解析或保存数据包内容。
 - 当前构建脚本生成的 macOS / Windows 成品通常没有正式代码签名；公开分发前需要按平台补齐签名和公证。
 
-## 六、维护说明 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-9" data-jobs-toc="v2">六、维护说明 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 - 新增工具时优先保持同类结构：`ToolName.py/README.md`、`【MacOS】📦生成dmg.command`、`【Windows】📦生成exe.bat`、`ToolName/`。
 - 外层 README 负责用户运行前说明；内层 Python 工程负责源码、依赖、测试和构建细节。
@@ -137,7 +160,7 @@ output/
 
 第一层交付目录与平台打包脚本同层保存 `dist/`，以及最新 APP / DMG 的相对符号链接（Mac）或 EXE / 分发包的 `.lnk`（Windows）。双击快捷方式即可接触成品，真实文件保留在 `dist/`；成功构建自动更新入口，清理旧产物时移除对应旧入口。尚无成品时不生成无效快捷方式。
 
-## 七、上传 README 演示视频 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-10" data-jobs-toc="v2">七、上传 README 演示视频 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 上传入口位于相邻的 `JobsCommand@Gits` 仓，需要同时检出该仓后使用下方链接；本工具仓内保留完整使用说明。
 
@@ -153,15 +176,15 @@ output/
 
 ## 八、<span id="git-submodule-scripts">Git 子模块脚本</span> <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
-### [【MacOS】⏬下载配置当前Git子模块.command](./【MacOS】⏬下载配置当前Git子模块.command)
+### <span id="jobs-toc-heading-12" data-jobs-toc="v2">[【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](./【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command)</span><!-- jobs-toc:heading-end -->
 
-> **目的：** 把选定子仓同步到远端目标分支最新提交，并让父仓记录对应版本。
+> **目的：** 把选定子仓及可选的后代子模块同步到各自远端目标分支最新提交，并让入口父仓记录对应版本。
 
 * 阅读自述并回车，检查环境、载入脚本子仓清单，先拉取父仓并执行 `pull --rebase`。
 
   * 父仓有未提交改动时跳过拉取，继续进入子仓菜单。
 
-* 选择同步范围。
+* 在主菜单选择同步范围；“切换同步深度”可在默认“向下递归”和“仅直属子模块”之间切换，当前深度适用于各同步动作。
 
   * 全量：同步清单内全部目标；须输入 `YES` 执行删除重建，其它输入取消。
   * 指定：勾选需要的子仓；已有：只更新清单中本地已有的子仓，没有任何已有子仓时转全量。
@@ -171,15 +194,19 @@ output/
 
   * 全量模式会在补齐登记后删除目标目录及旧缓存，再重新下载；**本地独有提交可能丢失**。
 
-* 优先同步 `main`，不存在则使用远端默认分支。
+* 拉取并强制对齐远端目标分支最新提交：优先使用该层 `.gitmodules` 显式 `branch`，`.` 继承直接父仓分支；未设置时优先 `main`，不存在则使用远端默认分支。
 
   * 目录缺失：首次克隆；目录已有：`fetch` 后以 `checkout -B`、`reset --hard` 对齐远端，**本地目标分支未推送的独有提交可能被覆盖**。
 
-* 递归下载内部子模块并对齐各自父仓记录的提交，整理父仓关联与 Git 元数据；内部子模块不保证追到远端最新。
+* 按当前深度同步：默认逐层读取所选子仓下的 `.gitmodules`，将已登记后代同步到各自远端目标分支最新提交；仅直属模式不下载或更新下层代码。
+  * 只处理本层所选子树，不向上扫描，也不接管未登记的嵌套仓库。
+  * 深层只下载更新，不自动暂存或提交其父仓的 gitlink；递归后这些父仓可能显示子模块指针改动，保留待审阅。
 
-* 默认自动提交父仓的 `.gitmodules` / 子模块指针变化，不自动推送（`AUTO_PARENT_COMMIT=1`、`AUTO_PARENT_PUSH=0`），最后显示日志位置。
+* 整理入口父仓关联与 Git 元数据。
 
-### [【MacOS】🧾更新gitmodules.command](./【MacOS】🧾更新gitmodules.command)
+* 默认自动提交入口父仓的 `.gitmodules` / 子模块指针变化，不自动推送（`AUTO_PARENT_COMMIT=1`、`AUTO_PARENT_PUSH=0`），最后显示日志位置。
+
+### <span id="jobs-toc-heading-13" data-jobs-toc="v2">[【MacOS】🧾更新gitmodules.command](./【MacOS】🧾更新gitmodules.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 把已在本地的直属子仓增量登记为完整子模块，保留已有版本选择。
 
@@ -205,7 +232,7 @@ output/
 .
 ├── .gitignore
 ├── .gitmodules
-├── 【MacOS】⏬下载配置当前Git子模块.command
+├── 【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command
 ├── 【MacOS】🧾更新gitmodules.command
 ├── icon.png
 ├── JobsAppTrafficMonitor.py/  # 独立 Git 子仓
@@ -228,7 +255,7 @@ output/
   * [JobsAppTrafficMonitor.py](./JobsAppTrafficMonitor.py/README.md)、[JobsCodexAccountSwitcher.py](./JobsCodexAccountSwitcher.py/README.md)、[JobsMockTool.py](./JobsMockTool.py/README.md)、[JobsRemoteHost.py](./JobsRemoteHost.py/README.md)、[JobsReverseIPA.py](./JobsReverseIPA.py/README.md)、[JobsSystemMonitor.py](./JobsSystemMonitor.py/README.md)、[LANFileServer.py](./LANFileServer.py/README.md)。
 * `JobsCodexTokenMonitor.py/` 当前是本仓内普通工具目录，保存独立用量监控源码、资源和平台入口；下列流程由本仓统一列出。
 
-### [【MacOS】📦生成dmg.command](./JobsCodexTokenMonitor.py/【MacOS】📦生成dmg.command)
+### <span id="jobs-toc-heading-15" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./JobsCodexTokenMonitor.py/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在本机生成 JobsCodexTokenMonitor 的 APP / DMG，并打开本次成品。
 
@@ -238,7 +265,7 @@ output/
 * 打包并校验 APP，封装 DMG，统一输出到 `dist/YYYY.MM.DD HH-mm-ss/`。
 * 更新第一层产物快捷方式，打开产物目录，再启动本次 APP；失败时查看系统临时目录中的构建日志。
 
-### [【Windows】📦生成exe.bat](./JobsCodexTokenMonitor.py/【Windows】📦生成exe.bat)
+### <span id="jobs-toc-heading-16" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./JobsCodexTokenMonitor.py/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成 JobsCodexTokenMonitor 的 EXE 分发目录与 ZIP。
 

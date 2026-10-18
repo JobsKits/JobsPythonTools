@@ -2,11 +2,25 @@
 
 ![Jobs出品，必属精品](https://picsum.photos/1500/400)
 
-[toc]
+<!-- jobs-toc:start -->
+<!-- jobs-toc:source {"v":2,"token":"[toc]"} -->
+<details>
+<summary>📚 目录（点击展开 / 收起）</summary>
+
+- [🔥 前言](#jobs-toc-heading-1)
+- [一、工程与入口速览](#layout)
+- [二、打开监控与设置面板](#settings)
+- [三、Token 统计口径](#counting)
+- [四、可选会话联动与旧配置迁移](#hooks)
+- [五、源码运行与双端打包](#build)
+- [六、数据、日志与验证](#verification)
+
+</details>
+<!-- jobs-toc:end -->
 
 ---
 
-## 🔥 <font id=前言>前言</font>
+## <span id="jobs-toc-heading-1" data-jobs-toc="v2">🔥 <font id=前言>前言</font></span><!-- jobs-toc:heading-end -->
 
 使用 [**Python**](https://www.python.org/) 和 [**PySide6**](https://doc.qt.io/qtforpython-6/) 编写的独立 [**Codex**](https://openai.com/codex) Token 上下行监控工具。只读本地会话日志，显示每轮输入 / 输出、对话标题、提问摘要和完成状态；主面板常驻“窗口置顶”复选框，一键置顶或取消。
 
