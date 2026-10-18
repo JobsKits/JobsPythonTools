@@ -1,0 +1,15 @@
+# 本机构建中间文件与交付产物
+work/
+dist/
+.venv/
+.venv-*/
+.venv.backup*/
+*.app
+*.dmg
+*.exe
+*.zip
+*.lnk
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
