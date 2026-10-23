@@ -31,80 +31,22 @@
 
 ## <span id="jobs-toc-heading-1" data-jobs-toc="v2">🔥 <font id=前言>前言</font></span><!-- jobs-toc:heading-end -->
 
-子仓下载与关联操作见 [Git 子模块脚本](#git-submodule-scripts)。
+`JobsPythonTools.py` 是 Jobs 本地 [**Python**](https://www.python.org) 桌面工具集合，覆盖文件共享、Mock API、IPA 静态分析、按 App 流量监控、整机监控、浏览器远程协助、Codex 账户切换及 Token 用量监控。各工具的当前能力和详细操作入口见下方总览。
 
-本目录中可独立运行的 `.command` 入口先显示内置自述：标题红色加粗，编号正文蓝色且不加粗；在终端按回车确认后才进入原有流程，按 `Ctrl+C` 取消。非彩色终端显示纯文本；没有可交互输入时停止，避免确认缺失后继续执行。
+多数工具采用“外层交付目录 + 内层 Python 工程”结构：外层放总说明、双击入口和 `dist/YYYY.MM.DD HH-mm-ss/` 产物，内层放源码、依赖、资源、测试与构建配置；具体布局以各工具 README 为准。
 
-`JobsPythonTools.py` 是 Jobs 本地 [**Python**](https://www.python.org) 桌面工具集合仓库，包含局域网文件共享、Mock API、IPA 静态分析、App 流量监控、Codex 账户切换和独立 Token 用量监控等工具。
-
-每个工具都采用“外层交付目录 + 内层 Python 工程”的结构：外层放 `README.md` 和双击入口脚本，内层放源码、依赖、资源、测试和构建配置，外层 `dist/YYYY.MM.DD HH-mm-ss/` 保存交付产物。
-
-<strong id="markdown-toc-sync">同步后文档目录：本地 `[toc]`，提交后发布折叠目录</strong>
-
-本地编辑保留独占行 `[toc]`；整文件暂存时由 [**Git**](https://git-scm.com/) 过滤器生成按标题层级缩进、默认收起的可折叠目录，正常提交推送后供远端展示。下载入口逐仓检查已生效的 `filter.jobs-markdown-toc` 配置，再决定是否恢复当前工作区；父仓配置不能代替子仓配置。
-
-| 本仓配置与工具 | 同步入口处理 | 结果与依赖 |
-| --- | --- | --- |
-| 已有有效目录过滤器 | 执行本仓 `.jobs-markdown-toc/MarkdownToc.mjs restore`，再执行 `verify`；已有工作树即使没有新提交，也显式恢复当前正文 | 需要可用的 [**Node.js**](https://nodejs.org) 和完整目录工具；保留正文及原暂存语义 |
-| 未配置有效目录过滤器 | 明确跳过目录恢复，不自动安装、注册或改写 Git 配置 | 不额外依赖 Node.js；跳过不代表已有生成目录已恢复为 `[toc]` |
-| 已有有效过滤器，但缺少 Node.js / 工具，或还原、验证失败 | 报出具体仓库并停止本轮同步 | 处理该仓配置或工具后重试，不能将本轮视为全部成功 |
-
-默认只拉取的首次克隆先以 `--no-checkout` 复制已预检对象，记录真实远端地址后才首次安全检出，让按真实 URL 匹配的机器过滤器有机会生效；不会为此再次联网获取未经预检的提交。已有生成目录的恢复以当前磁盘正文为来源，不从旧 `HEAD` 或暂存区覆盖正文，也不自动暂存、提交或推送。当前机器尚未注册或换机后没有有效配置时，仍按表中“跳过”处理，不能承诺首次落盘已经是 `[toc]`。
-
-<strong id="readonly-submodule-mode">先选用途：只拉取电脑默认跟随分支最新，子仓保持本地分支</strong>
-
-| 启动选择 | 版本依据 | 是否写入父仓提交 |
-| --- | --- | --- |
-| 只拉取，默认 | 更新当前父仓明确的远程上游，再逐层跟随子仓目标分支最新提交，保持本地跟踪分支 | 不暂存、不提交、不推送 |
-| 维护子模块，显式选择 | 按本仓清单及原有菜单，把所选子树更新到各自远端目标分支最新 | 沿用 `AUTO_PARENT_COMMIT` / `AUTO_PARENT_PUSH` 原有开关 |
-
-启动第一屏显示同步策略版本 `2026.10.21-toc`。新电脑须先取得并运行带此版本号的入口；另一台电脑上的本地修改不会自动更新到新电脑。任一仓库拉取、分支切换或递归校验失败时，本轮不能视为全部完成；处理日志中的具体路径后重新运行。
-
-只拉取模式从脚本所在仓库向下递归处理全部已登记子模块；不向上处理，不使用清单新增关联，也不把子仓最新提交自动提交回父仓。各层优先使用直接父仓 `.gitmodules` 的显式 `branch`，`.` 继承该层计划更新后的直接父仓分支；未配置时读取该子仓远端默认分支。首次下载和已有游离 HEAD 都会恢复或创建对应本地跟踪分支，获取最新提交并快进；成功结束时子仓显示实际分支名。每层相对 URL 随当前父仓的下载线路解析。只拉取模式使用系统 Git、zsh、Perl 等现有工具；仅命中有效目录过滤器时另需 Node.js 和该仓完整目录工具，不进入维护模式的 Homebrew / fzf 安装流程。
-
-子仓源码、未跟踪内容、已暂存 gitlink、未完成操作或本地独有提交会报出具体路径并停止；不会强制覆盖或丢弃独有的游离提交，父仓 `YES` 不扩散到子仓。当前父仓自己的源码改动或本地独有提交，仍须红字列明并精确输入 `YES` 才舍弃。目标分支不存在、远端默认分支无法确定或最新提交获取失败时，停止并报告对应仓库与来源；不会把旧 gitlink SHA 当作最新分支结果。
-
-只拉取模式在入口仓已有本地分支时仍要求明确上游。入口仓自身处于游离 HEAD 时，先使用直接父仓 `.gitmodules` 的显式 `branch`，`.` 继承直接父仓当前分支；无配置时读取 `origin` 或唯一远端的默认分支。已有目标本地分支须明确跟踪所选远端的同名分支；先获取最新提交，预检整棵子树与提交历史，并复查确认期间的状态，再恢复或创建本地跟踪分支。入口源码未提交、需继承分支时直接父仓同样游离、目标不明、目标分支无法快进或存在未受引用保护的独有游离提交时停止；普通父仓的 `YES` 不授权舍弃这些提交。
-
-`REMOTE_NAME` 等原有清单参数只用于维护模式。设置 `DRY_RUN=1` 时，默认只拉取会停止并提示选择维护演练，不能忽略演练标志后执行真实更新。未初始化但存在旧 Git 缓存的空工作树须先恢复，脚本不会覆盖缓存内索引或独有提交。
-
-下文关于清单新增、多选、可切换同步深度、目录清理及自动提交的既有流程，均指显式选择的**维护模式**。只拉取模式默认向下递归到分支最新，不使用这些写入父仓的开关；子仓最新提交与父仓 gitlink 可能不同，父仓会显示待审阅的子模块指针改动。两种模式都保留各仓独立清单和来源显示；只拉取日志带运行时间与进程号，终端会输出实际路径。
-
-维护模式补齐或新增登记时，不自动写入 `branch = main`；已有 `branch` 与缺省状态均保留。显式 `branch` 严格指定目标分支，`.` 继承直接父仓分支；未配置时跟随子仓远端默认分支。目标不存在、直接父仓分支无法确定或远端默认分支无法确定时停止。
-
-<strong id="submodule-quick-look">父子仓多平台地址速览</strong>
-
-当前 `./.gitmodules` 使用相对地址，例如：
-
-```ini
-[submodule "LANFileServer.py"]
-    path = LANFileServer.py
-    url = ../LANFileServer.git
-    branch = main
-```
-
-下表展示原生 Git 从父仓地址解析相对 URL 的结果，前提是全新克隆且没有本地 URL 覆盖。前两行来自本地已配置的 [**GitHub**](https://github.com) / [**Gitee**](https://gitee.com) 远端；自建平台仅为结构示例，未部署。
-
-| 平台 | 父仓克隆地址 | 子仓解析地址 |
-| --- | --- | --- |
-| GitHub | `git@github.com:JobsKits/JobsPythonTools.git` | `git@github.com:JobsKits/LANFileServer.git` |
-| Gitee | `git@gitee.com:JobsGo/JobsPythonTools.git` | `git@gitee.com:JobsGo/LANFileServer.git` |
-| 自建平台，仅结构示例 | `ssh://git@git.example.com:2222/team/JobsPythonTools.git` | `ssh://git@git.example.com:2222/team/LANFileServer.git` |
-
-`path` 是本地目录，`url` 是远端仓库位置；相对 URL 跟随父仓默认远端的平台、组织、协议与端口，前提是该平台已有对应子仓及父仓锁定的提交。已有克隆须核对默认远端和本地子模块配置，仅新增 remote 不会切换线路。
-
-**下载脚本的 Gitee 传输规则：** `【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command` 在本次运行中，将 `git@gitee.com:`、`ssh://git@gitee.com/`、`ssh://git@gitee.com:22/` 开头的标准地址统一通过 `https://gitee.com/` 访问，保留账号、真实仓名和分支；即使设置 `GIT_URL_STYLE=ssh`，这类 Gitee 地址仍使用 HTTPS。各层首次克隆和后续拉取都继承该规则，历史子模块中的 SSH 地址无需新电脑先配置 SSH 密钥。
-
-规则通过追加进程级 `GIT_CONFIG_COUNT` / `url.https://gitee.com/.insteadOf` 配置传给子进程，不写入全局 Git 配置，也不依赖其它工程路径。GitHub、其它主机及非 `22` 的自定义 SSH 端口保持原规则。克隆或递归更新失败会返回非零状态，停止本轮同步并保留错误；不会再输出该项同步成功。各仓清单与浅克隆参数保留；全量同步默认逐仓复用已有工作区，空或缺失目录才首次克隆，不批量删除旧仓名目录、多层子树或缓存。未提交内容须逐仓处理，精确 `YES` 仅放弃当前仓自己的内容。
+独立 `.command` 入口先显示内置自述：标题红色加粗，编号正文蓝色且不加粗，非彩色终端显示纯文本；在终端回车确认后执行，`Ctrl+C` 取消，缺少可交互输入时停止。子仓下载与关联操作见 [Git 子模块脚本](#git-submodule-scripts)。
 
 ## <span id="jobs-toc-heading-2" data-jobs-toc="v2">一、工具总览 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 | 工具 | 目录 | 核心用途 | 主要入口 |
 | --- | --- | --- | --- |
-| `LANFileServer` | `./LANFileServer.py/` | 把本机文件 / 文件夹临时共享给同一局域网设备。 | `./LANFileServer.py/【MacOS】📦生成dmg.command`、`./LANFileServer.py/【Windows】📦生成exe.bat` |
-| `JobsMockTool` | `./JobsMockTool.py/` | 图形化配置本地 Mock API，用于前端、客户端和脚本联调。 | `./JobsMockTool.py/【MacOS】📦生成dmg.command`、`./JobsMockTool.py/【Windows】📦生成exe.bat` |
-| `JobsReverseIPA` | `./JobsReverseIPA.py/` | 对授权 `.ipa` 做静态分析、环境体检、资源和敏感字符串扫描。 | `./JobsReverseIPA.py/【MacOS】📦生成dmg.command`、`./JobsReverseIPA.py/【Windows】📦生成exe.bat` |
-| `JobsAppTrafficMonitor` | `./JobsAppTrafficMonitor.py/` | 按 App 实时统计 macOS / Windows 上下行流量。 | `./JobsAppTrafficMonitor.py/【MacOS】📦生成dmg.command`、`./JobsAppTrafficMonitor.py/【Windows】📦生成exe.bat` |
+| `LANFileServer` | [功能与操作](./LANFileServer.py/README.md) | 临时 Python / 非临时 Nginx 文件共享、浏览器预览 / 下载、可选上传、二维码、项目聊天室与访问记录。 | [macOS](./LANFileServer.py/【MacOS】📦生成dmg.command) / [Windows](./LANFileServer.py/【Windows】📦生成exe.bat) 打包 |
+| `JobsMockTool` | [功能与操作](./JobsMockTool.py/README.md) | 多接口、单端口 / 独立端口、query / body / headers 条件响应、JSON 树形编辑、内置请求测试与配置保存。 | [macOS](./JobsMockTool.py/【MacOS】📦生成dmg.command) / [Windows](./JobsMockTool.py/【Windows】📦生成exe.bat)；[构建脚本](./JobsMockTool.py/build_macos.command/README.md) |
+| `JobsReverseIPA` | [功能与操作](./JobsReverseIPA.py/README.md) | 授权 IPA 静态分析、环境体检、资源 / 敏感字符串扫描，输出 HTML / JSON / Markdown 报告。 | [macOS](./JobsReverseIPA.py/【MacOS】📦生成dmg.command) / [Windows](./JobsReverseIPA.py/【Windows】📦生成exe.bat) 打包 |
+| `JobsAppTrafficMonitor` | [功能与操作](./JobsAppTrafficMonitor.py/README.md) | macOS 按 App / 进程统计实时速率与累计流量，归并 Helper / XPC；Windows ETW 采集接口尚为预留。 | [macOS](./JobsAppTrafficMonitor.py/【MacOS】📦生成dmg.command) / [Windows](./JobsAppTrafficMonitor.py/【Windows】📦生成exe.bat) 打包 |
+| `JobsSystemMonitor` | [功能与操作](./JobsSystemMonitor.py/README.md) | CPU / GPU / 内存 / 上下行速率、历史趋势、网卡选择、刷新间隔；macOS 菜单栏与 Windows 监控条 / 托盘。 | 双端打包入口，Windows 桌面行为需目标机验收 |
+| `JobsRemoteHost` | [功能与操作](./JobsRemoteHost.py/README.md) | 浏览器发起观看 / 控制申请，本机弹窗授权；局域网地址 / 临时公网链接、菜单栏 / 托盘驻留及停止服务。 | 双端打包、源码运行及协议自检入口见功能说明 |
 | `JobsCodexAccountSwitcher` | `./JobsCodexAccountSwitcher.py/` | 保存 Codex 文件登录态（口令保护可选）、退出后切换与重启；桌面兼容需核验。 | [说明](./JobsCodexAccountSwitcher.py/README.md)、双端打包入口 |
 | `JobsCodexTokenMonitor` | `./JobsCodexTokenMonitor.py/` | 独立显示 Codex 每轮输入 / 输出 Token；主面板常驻“窗口置顶”复选框，主题及会话联动统一从 `⋯ → 设置…` 进入。 | [说明](./JobsCodexTokenMonitor.py/README.md)、双端打包入口 |
 
@@ -197,7 +139,7 @@ output/
 
 上传入口位于相邻的 `JobsCommand@Gits` 仓，需要同时检出该仓后使用下方链接；本工具仓内保留完整使用说明。
 
-双击 [上传 GitHub 视频附件脚本](../JobsCommand@Gits/【MacOS】🎬上传GitHub视频附件.command/【MacOS】🎬上传GitHub视频附件.command)，按回车确认，再输入 GitHub 仓库首页地址并拖入本地视频。支持 MP4 / MOV / WEBM；也可通过命令行传入这两个参数。需要安装 [**GitHub CLI**](https://cli.github.com/)，当前账号须有目标仓库写权限；未登录时脚本会引导登录。
+双击 [上传 GitHub 视频附件脚本](../JobsCommand@Gits/MacOS/【MacOS】🎬上传GitHub视频附件.command/【MacOS】🎬上传GitHub视频附件.command)，按回车确认，再输入 GitHub 仓库首页地址并拖入本地视频。支持 MP4 / MOV / WEBM；也可通过命令行传入这两个参数。需要安装 [**GitHub CLI**](https://cli.github.com/)，当前账号须有目标仓库写权限；未登录时脚本会引导登录。
 
 上传成功后显示附件 URL 并复制到剪贴板。将 URL 单独放到本地 README 的一段中，前后留空行，再正常提交、推送即可；以后只替换该 URL。脚本不修改 README，不创建提交或推送。每次运行都会创建新附件，失败时不自动重试，防止重复上传。运行日志路径会在终端显示，保存在系统临时目录。
 
@@ -209,8 +151,65 @@ output/
 
 ## 八、<span id="git-submodule-scripts">Git 子模块脚本</span> <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
-### <span id="jobs-toc-heading-12" data-jobs-toc="v2">[【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](./【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command)</span><!-- jobs-toc:heading-end -->
+<strong id="markdown-toc-sync">同步后文档目录：本地 `[toc]`，提交后发布折叠目录</strong>
 
+本地编辑保留独占行 `[toc]`；整文件暂存时由 [**Git**](https://git-scm.com/) 过滤器生成按标题层级缩进、默认收起的可折叠目录，正常提交推送后供远端展示。下载入口逐仓检查已生效的 `filter.jobs-markdown-toc` 配置，再决定是否恢复当前工作区；父仓配置不能代替子仓配置。
+
+| 本仓配置与工具 | 同步入口处理 | 结果与依赖 |
+| --- | --- | --- |
+| 已有有效目录过滤器 | 执行本仓 `.jobs-markdown-toc/MarkdownToc.mjs restore`，再执行 `verify`；已有工作树即使没有新提交，也显式恢复当前正文 | 需要可用的 [**Node.js**](https://nodejs.org) 和完整目录工具；保留正文及原暂存语义 |
+| 未配置有效目录过滤器 | 明确跳过目录恢复，不自动安装、注册或改写 Git 配置 | 不额外依赖 Node.js；跳过不代表已有生成目录已恢复为 `[toc]` |
+| 已有有效过滤器，但缺少 Node.js / 工具，或还原、验证失败 | 报出具体仓库并停止本轮同步 | 处理该仓配置或工具后重试，不能将本轮视为全部成功 |
+
+默认只拉取的首次克隆先以 `--no-checkout` 复制已预检对象，记录真实远端地址后才首次安全检出，让按真实 URL 匹配的机器过滤器有机会生效；不会为此再次联网获取未经预检的提交。已有生成目录的恢复以当前磁盘正文为来源，不从旧 `HEAD` 或暂存区覆盖正文，也不自动暂存、提交或推送。当前机器尚未注册或换机后没有有效配置时，仍按表中“跳过”处理，不能承诺首次落盘已经是 `[toc]`。
+
+<strong id="readonly-submodule-mode">先选用途：只拉取电脑默认跟随分支最新，子仓保持本地分支</strong>
+
+| 启动选择 | 版本依据 | 是否写入父仓提交 |
+| --- | --- | --- |
+| 只拉取，默认 | 更新当前父仓明确的远程上游，再逐层跟随子仓目标分支最新提交，保持本地跟踪分支 | 不暂存、不提交、不推送 |
+| 维护子模块，显式选择 | 按本仓清单及原有菜单，把所选子树更新到各自远端目标分支最新 | 沿用 `AUTO_PARENT_COMMIT` / `AUTO_PARENT_PUSH` 原有开关 |
+
+启动第一屏显示同步策略版本 `2026.10.21-toc`。新电脑须先取得并运行带此版本号的入口；另一台电脑上的本地修改不会自动更新到新电脑。任一仓库拉取、分支切换或递归校验失败时，本轮不能视为全部完成；处理日志中的具体路径后重新运行。
+
+只拉取模式从脚本所在仓库向下递归处理全部已登记子模块；不向上处理，不使用清单新增关联，也不把子仓最新提交自动提交回父仓。各层优先使用直接父仓 `.gitmodules` 的显式 `branch`，`.` 继承该层计划更新后的直接父仓分支；未配置时读取该子仓远端默认分支。首次下载和已有游离 HEAD 都会恢复或创建对应本地跟踪分支，获取最新提交并快进；成功结束时子仓显示实际分支名。每层相对 URL 随当前父仓的下载线路解析。只拉取模式使用系统 Git、zsh、Perl 等现有工具；仅命中有效目录过滤器时另需 Node.js 和该仓完整目录工具，不进入维护模式的 Homebrew / fzf 安装流程。
+
+子仓源码、未跟踪内容、已暂存 gitlink、未完成操作或本地独有提交会报出具体路径并停止；不会强制覆盖或丢弃独有的游离提交，父仓 `YES` 不扩散到子仓。当前父仓自己的源码改动或本地独有提交，仍须红字列明并精确输入 `YES` 才舍弃。目标分支不存在、远端默认分支无法确定或最新提交获取失败时，停止并报告对应仓库与来源；不会把旧 gitlink SHA 当作最新分支结果。
+
+只拉取模式在入口仓已有本地分支时仍要求明确上游。入口仓自身处于游离 HEAD 时，先使用直接父仓 `.gitmodules` 的显式 `branch`，`.` 继承直接父仓当前分支；无配置时读取 `origin` 或唯一远端的默认分支。已有目标本地分支须明确跟踪所选远端的同名分支；先获取最新提交，预检整棵子树与提交历史，并复查确认期间的状态，再恢复或创建本地跟踪分支。入口源码未提交、需继承分支时直接父仓同样游离、目标不明、目标分支无法快进或存在未受引用保护的独有游离提交时停止；普通父仓的 `YES` 不授权舍弃这些提交。
+
+`REMOTE_NAME` 等原有清单参数只用于维护模式。设置 `DRY_RUN=1` 时，默认只拉取会停止并提示选择维护演练，不能忽略演练标志后执行真实更新。未初始化但存在旧 Git 缓存的空工作树须先恢复，脚本不会覆盖缓存内索引或独有提交。
+
+下文关于清单新增、多选、可切换同步深度、目录清理及自动提交的既有流程，均指显式选择的**维护模式**。只拉取模式默认向下递归到分支最新，不使用这些写入父仓的开关；子仓最新提交与父仓 gitlink 可能不同，父仓会显示待审阅的子模块指针改动。两种模式都保留各仓独立清单和来源显示；只拉取日志带运行时间与进程号，终端会输出实际路径。
+
+维护模式补齐或新增登记时，不自动写入 `branch = main`；已有 `branch` 与缺省状态均保留。显式 `branch` 严格指定目标分支，`.` 继承直接父仓分支；未配置时跟随子仓远端默认分支。目标不存在、直接父仓分支无法确定或远端默认分支无法确定时停止。
+
+<strong id="submodule-quick-look">父子仓多平台地址速览</strong>
+
+当前 `./.gitmodules` 使用相对地址，例如：
+
+```ini
+[submodule "LANFileServer.py"]
+    path = LANFileServer.py
+    url = ../LANFileServer.git
+    branch = main
+```
+
+下表展示原生 Git 从父仓地址解析相对 URL 的结果，前提是全新克隆且没有本地 URL 覆盖。前两行来自本地已配置的 [**GitHub**](https://github.com) / [**Gitee**](https://gitee.com) 远端；自建平台仅为结构示例，未部署。
+
+| 平台 | 父仓克隆地址 | 子仓解析地址 |
+| --- | --- | --- |
+| GitHub | `git@github.com:JobsKits/JobsPythonTools.git` | `git@github.com:JobsKits/LANFileServer.git` |
+| Gitee | `git@gitee.com:JobsGo/JobsPythonTools.git` | `git@gitee.com:JobsGo/LANFileServer.git` |
+| 自建平台，仅结构示例 | `ssh://git@git.example.com:2222/team/JobsPythonTools.git` | `ssh://git@git.example.com:2222/team/LANFileServer.git` |
+
+`path` 是本地目录，`url` 是远端仓库位置；相对 URL 跟随父仓默认远端的平台、组织、协议与端口，前提是该平台已有对应子仓及父仓锁定的提交。已有克隆须核对默认远端和本地子模块配置，仅新增 remote 不会切换线路。
+
+**下载脚本的 Gitee 传输规则：** `【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command` 在本次运行中，将 `git@gitee.com:`、`ssh://git@gitee.com/`、`ssh://git@gitee.com:22/` 开头的标准地址统一通过 `https://gitee.com/` 访问，保留账号、真实仓名和分支；即使设置 `GIT_URL_STYLE=ssh`，这类 Gitee 地址仍使用 HTTPS。各层首次克隆和后续拉取都继承该规则，历史子模块中的 SSH 地址无需新电脑先配置 SSH 密钥。
+
+规则通过追加进程级 `GIT_CONFIG_COUNT` / `url.https://gitee.com/.insteadOf` 配置传给子进程，不写入全局 Git 配置，也不依赖其它工程路径。GitHub、其它主机及非 `22` 的自定义 SSH 端口保持原规则。克隆或递归更新失败会返回非零状态，停止本轮同步并保留错误；不会再输出该项同步成功。各仓清单与浅克隆参数保留；全量同步默认逐仓复用已有工作区，空或缺失目录才首次克隆，不批量删除旧仓名目录、多层子树或缓存。未提交内容须逐仓处理，精确 `YES` 仅放弃当前仓自己的内容。
+
+### <span id="jobs-toc-heading-12" data-jobs-toc="v2">[【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](./【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 把选定子仓及可选的后代子模块同步到各自远端目标分支最新提交，并让入口父仓记录对应版本。
 
