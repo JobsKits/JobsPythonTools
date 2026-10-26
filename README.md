@@ -13,16 +13,17 @@
 - [三、运行与打包](#jobs-toc-heading-4)
   - [3.1、macOS](#jobs-toc-heading-5)
   - [3.2、Windows](#jobs-toc-heading-6)
-- [四、输出与忽略规则](#jobs-toc-heading-7)
-- [五、风险边界](#jobs-toc-heading-8)
-- [六、维护说明](#jobs-toc-heading-9)
-- [七、上传 README 演示视频](#jobs-toc-heading-10)
+  - [3.3、Windows 系统与架构矩阵](#windows-compatibility)
+- [四、输出与忽略规则](#jobs-toc-heading-8)
+- [五、风险边界](#jobs-toc-heading-9)
+- [六、维护说明](#jobs-toc-heading-10)
+- [七、上传 README 演示视频](#jobs-toc-heading-11)
 - [八、Git 子模块脚本](#git-submodule-scripts)
-  - [【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](#jobs-toc-heading-12)
-  - [【MacOS】🧾更新gitmodules.command](#jobs-toc-heading-13)
+  - [【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](#jobs-toc-heading-13)
+  - [【MacOS】🧾更新gitmodules.command](#jobs-toc-heading-14)
 - [九、本仓目录与脚本入口](#repository-layout-and-entrypoints)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-15)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-16)
+  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-16)
+  - [【Windows】📦生成exe.bat](#jobs-toc-heading-17)
 
 </details>
 <!-- jobs-toc:end -->
@@ -31,7 +32,11 @@
 
 ## <span id="jobs-toc-heading-1" data-jobs-toc="v2">🔥 <font id=前言>前言</font></span><!-- jobs-toc:heading-end -->
 
+**最低支持系统：** [**Windows**](https://www.microsoft.com/windows) **10 64 位（x64）**。这是当前最低支持目标；具体最低 build 尚未锁定，完整实机兼容性仍待验证。
+
 `JobsPythonTools.py` 是 Jobs 本地 [**Python**](https://www.python.org) 桌面工具集合，覆盖文件共享、Mock API、IPA 静态分析、按 App 流量监控、整机监控、浏览器远程协助、Codex 账户切换及 Token 用量监控。各工具的当前能力和详细操作入口见下方总览。
+
+**系统兼容范围：** 当前 EXE 以 [**Windows**](https://www.microsoft.com/windows) 10 / 11 x64 为主要构建与测试目标；Windows 打包入口不代表 XP、Vista、7、8、8.1 或所有 CPU 架构通用。多数工具使用 [**Qt 6**](https://doc.qt.io/qt-6/)，`JobsRemoteHost` 的 [**Tkinter**](https://docs.python.org/3.11/library/tkinter.html) 路线另有依赖边界，详见 [Windows 系统与架构矩阵](#windows-compatibility)。目前尚无覆盖各 Windows 版本与架构的完整实机验收结果。
 
 多数工具采用“外层交付目录 + 内层 Python 工程”结构：外层放总说明、双击入口和 `dist/YYYY.MM.DD HH-mm-ss/` 产物，内层放源码、依赖、资源、测试与构建配置；具体布局以各工具 README 为准。
 
@@ -94,7 +99,30 @@ Windows 可执行程序必须在 Windows 本机生成或启动。进入目标工
 
 不同工具的 Windows 入口行为略有差异：`JobsMockTool`、`JobsReverseIPA`、`JobsAppTrafficMonitor` 以打包 `.exe` 为主；`LANFileServer` 默认启动图形界面，内部保留 `build-exe` 打包模式。
 
-## <span id="jobs-toc-heading-7" data-jobs-toc="v2">四、输出与忽略规则 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+### 3.3、<span id="windows-compatibility">Windows 系统与架构矩阵</span> <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+
+下表依据各工具当前的 `pyproject.toml`、`requirements*.txt` 和 Windows 构建入口整理；Python 版本列表示源码 / 构建要求，不能单独作为成品最低 Windows 版本。
+
+| 工具 | Python / GUI 依赖边界 | Windows 成品目标与限制 |
+| --- | --- | --- |
+| [LANFileServer](./LANFileServer.py/README.md) | 声明 Python `>=3.9`、[**PySide6**](https://doc.qt.io/qtforpython-6/) `>=6.7` | Windows 10 / 11 x64；旧系统不在当前 Qt 6 分发范围。 |
+| [JobsMockTool](./JobsMockTool.py/README.md) | 未单独声明 Python 下限；PySide6 `>=6.7`，含 QtWebEngine | Windows 10 / 11 x64；实际 Python 与图形依赖须同时满足构建要求。 |
+| [JobsReverseIPA](./JobsReverseIPA.py/README.md) | 声明 Python `>=3.10`、PySide6 `>=6.6` | Windows 10 / 11 x64；工具链与各分析能力另按本工具说明核对。 |
+| [JobsAppTrafficMonitor](./JobsAppTrafficMonitor.py/README.md) | 声明 Python `>=3.11`、PySide6 `>=6.8,<7`；BAT 安装的 GUI / 构建包未锁版本 | Windows 10 / 11 x64 为打包目标；Windows ETW 采集器尚未实现，不能将 EXE 生成或窗口启动视为流量统计可用。 |
+| [JobsSystemMonitor](./JobsSystemMonitor.py/README.md) | Python `>=3.11`、PySide6 `>=6.8,<7` | Windows 10 / 11 x64；任务栏、托盘与 GPU 统计需目标机验收。 |
+| [JobsCodexAccountSwitcher](./JobsCodexAccountSwitcher.py/README.md) | Python `>=3.11`、PySide6 `>=6.8,<7` | Windows 10 / 11 x64；还需目标环境中实际可用的桌面应用及对应授权入口。 |
+| [JobsCodexTokenMonitor](./JobsCodexTokenMonitor.py/README.md) | Python `>=3.11`、PySide6 `>=6.8,<7` | Windows 10 / 11 x64；日志读取与桌面交互按目标环境验收。 |
+| [JobsRemoteHost](./JobsRemoteHost.py/README.md) | Python `>=3.11`、Tkinter；其他 Python 依赖未锁精确版本，cloudflared 使用最新下载 | Windows 10 / 11 为当前测试目标；Windows 8.1 仅可作为固定依赖后的探索项，尚未验证或承诺支持。 |
+
+[**Qt 6.8 官方 Windows 配置**](https://doc.qt.io/qt-6.8/windows.html)列出 Windows 10 **1809 起**及 Windows 11 的 x64 环境，并列出 ARM64 配置。这是对应 Qt 版本的上游边界；本仓多个依赖使用 `>=` 范围，实际安装的 Qt / Python / 原生库可能提高系统要求，因此没有适用于所有构建产物的统一最低 Windows build。当前 Qt 6 工具不提供 XP、Vista、Windows 7、8、8.1 兼容包；ARM64 上游可用也不等于本仓已经交付并验收 ARM64 成品。
+
+[**Python 3.11 官方 Windows 要求**](https://docs.python.org/3.11/using/windows.html)为 Windows 8.1 起；它只能说明 `JobsRemoteHost` 所用运行时的边界，不能覆盖新版 Pillow、mss、cloudflared 等组件的要求。当前不提供 XP / Vista / Windows 7 / 8 的兼容构建；Windows 8.1 完整组合仍待验证。使用更高 Python 版本重新打包时，应重新核对系统要求。
+
+构建时须在 Windows 准备兼容的 Python、构建器及依赖；成功分发的成品包含 Python 运行时，接收方无需另装 Python。`.exe` 后缀不表示架构通用，实际架构取决于构建 Python 与原生依赖；x86 / ARM64 尚未形成统一交付与验收矩阵。目录式产物必须完整分发 EXE、`_internal/` 及配套文件，不能只复制单个 EXE。
+
+测试时记录 Windows 版本 / build、CPU 架构及本次 Python、Qt、PyInstaller 和外部工具版本。优先在 Windows 10 / 11 x64 的无 Python 干净虚拟机检查完整成品，再验证各项业务；远程屏幕采集、输入控制、托盘、任务栏和 GPU 能力另做实体机检查。源码检查、打包成功或窗口出现，均不能代替对应系统的完整功能验收。
+
+## <span id="jobs-toc-heading-8" data-jobs-toc="v2">四、输出与忽略规则 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 构建产物默认不入库，根目录 `.gitignore` 已覆盖这些类型：
 
@@ -114,7 +142,7 @@ output/
 
 源码、`README.md`、`requirements.txt`、`pyproject.toml`、`*.spec`、资源文件和打包入口脚本保留入库。
 
-## <span id="jobs-toc-heading-8" data-jobs-toc="v2">五、风险边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+## <span id="jobs-toc-heading-9" data-jobs-toc="v2">五、风险边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 - `LANFileServer` 会把选中的文件 / 文件夹暴露给同一局域网设备，不要共享隐私目录、密码文件或浏览器数据。
 - `JobsReverseIPA` 只用于用户有权审计的 `.ipa` 文件，不用于未授权分析。
@@ -122,7 +150,7 @@ output/
 - `JobsAppTrafficMonitor` 只读取连接元数据与字节计数，不读取、解析或保存数据包内容。
 - 当前构建脚本生成的 macOS / Windows 成品通常没有正式代码签名；公开分发前需要按平台补齐签名和公证。
 
-## <span id="jobs-toc-heading-9" data-jobs-toc="v2">六、维护说明 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+## <span id="jobs-toc-heading-10" data-jobs-toc="v2">六、维护说明 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 - 新增工具时优先保持同类结构：`ToolName.py/README.md`、`【MacOS】📦生成dmg.command`、`【Windows】📦生成exe.bat`、`ToolName/`。
 - 外层 README 负责用户运行前说明；内层 Python 工程负责源码、依赖、测试和构建细节。
@@ -135,7 +163,7 @@ output/
 
 第一层交付目录与平台打包脚本同层保存 `dist/`，以及最新 APP / DMG 的相对符号链接（Mac）或 EXE / 分发包的 `.lnk`（Windows）。双击快捷方式即可接触成品，真实文件保留在 `dist/`；成功构建自动更新入口，清理旧产物时移除对应旧入口。尚无成品时不生成无效快捷方式。
 
-## <span id="jobs-toc-heading-10" data-jobs-toc="v2">七、上传 README 演示视频 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+## <span id="jobs-toc-heading-11" data-jobs-toc="v2">七、上传 README 演示视频 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 上传入口位于相邻的 `JobsCommand@Gits` 仓，需要同时检出该仓后使用下方链接；本工具仓内保留完整使用说明。
 
@@ -165,12 +193,14 @@ output/
 
 <strong id="readonly-submodule-mode">先选用途：只拉取电脑默认跟随分支最新，子仓保持本地分支</strong>
 
+用途、维护菜单、子仓多选和同步深度统一使用 [**fzf**](https://formulae.brew.sh/formula/fzf)。启动前需有可用 fzf，缺失或损坏时安全停止并提示修复，不自动退回数字菜单。维护菜单按 `←` 返回用途页，子仓与深度页按 `←` 返回维护菜单；返回后保留当前深度并恢复菜单位置。子仓多选用回车勾选 / 取消、空格确认、`Ctrl+A` 全选、`Ctrl+D` 清空；空选不启动同步，`Esc` / `Ctrl+C` 取消本轮。返回只改变后续选择，已经完成的父仓更新不会撤销。
+
 | 启动选择 | 版本依据 | 是否写入父仓提交 |
 | --- | --- | --- |
 | 只拉取，默认 | 更新当前父仓明确的远程上游，再逐层跟随子仓目标分支最新提交，保持本地跟踪分支 | 不暂存、不提交、不推送 |
 | 维护子模块，显式选择 | 按本仓清单及原有菜单，把所选子树更新到各自远端目标分支最新 | 沿用 `AUTO_PARENT_COMMIT` / `AUTO_PARENT_PUSH` 原有开关 |
 
-启动第一屏显示同步策略版本 `2026.10.21-toc`。新电脑须先取得并运行带此版本号的入口；另一台电脑上的本地修改不会自动更新到新电脑。任一仓库拉取、分支切换或递归校验失败时，本轮不能视为全部完成；处理日志中的具体路径后重新运行。
+启动第一屏显示同步策略版本 `2026.10.25-fzf-navigation`。新电脑须先取得并运行带此版本号的入口；另一台电脑上的本地修改不会自动更新到新电脑。任一仓库拉取、分支切换或递归校验失败时，本轮不能视为全部完成；处理日志中的具体路径后重新运行。
 
 只拉取模式从脚本所在仓库向下递归处理全部已登记子模块；不向上处理，不使用清单新增关联，也不把子仓最新提交自动提交回父仓。各层优先使用直接父仓 `.gitmodules` 的显式 `branch`，`.` 继承该层计划更新后的直接父仓分支；未配置时读取该子仓远端默认分支。首次下载和已有游离 HEAD 都会恢复或创建对应本地跟踪分支，获取最新提交并快进；成功结束时子仓显示实际分支名。每层相对 URL 随当前父仓的下载线路解析。只拉取模式使用系统 Git、zsh、Perl 等现有工具；仅命中有效目录过滤器时另需 Node.js 和该仓完整目录工具，不进入维护模式的 Homebrew / fzf 安装流程。
 
@@ -209,7 +239,7 @@ output/
 
 规则通过追加进程级 `GIT_CONFIG_COUNT` / `url.https://gitee.com/.insteadOf` 配置传给子进程，不写入全局 Git 配置，也不依赖其它工程路径。GitHub、其它主机及非 `22` 的自定义 SSH 端口保持原规则。克隆或递归更新失败会返回非零状态，停止本轮同步并保留错误；不会再输出该项同步成功。各仓清单与浅克隆参数保留；全量同步默认逐仓复用已有工作区，空或缺失目录才首次克隆，不批量删除旧仓名目录、多层子树或缓存。未提交内容须逐仓处理，精确 `YES` 仅放弃当前仓自己的内容。
 
-### <span id="jobs-toc-heading-12" data-jobs-toc="v2">[【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](./【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-13" data-jobs-toc="v2">[【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command](./【MacOS】⏬下载配置当前Git子模块（可向下同步递归）.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 把选定子仓及可选的后代子模块同步到各自远端目标分支最新提交，并让入口父仓记录对应版本。
 
@@ -245,7 +275,7 @@ output/
 
 * 默认自动提交入口父仓的 `.gitmodules` / 子模块指针变化，不自动推送（`AUTO_PARENT_COMMIT=1`、`AUTO_PARENT_PUSH=0`），最后显示日志位置。
 
-### <span id="jobs-toc-heading-13" data-jobs-toc="v2">[【MacOS】🧾更新gitmodules.command](./【MacOS】🧾更新gitmodules.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-14" data-jobs-toc="v2">[【MacOS】🧾更新gitmodules.command](./【MacOS】🧾更新gitmodules.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 把已在本地的直属子仓增量登记为完整子模块，保留已有版本选择。
 
@@ -294,7 +324,7 @@ output/
   * [JobsAppTrafficMonitor.py](./JobsAppTrafficMonitor.py/README.md)、[JobsCodexAccountSwitcher.py](./JobsCodexAccountSwitcher.py/README.md)、[JobsMockTool.py](./JobsMockTool.py/README.md)、[JobsRemoteHost.py](./JobsRemoteHost.py/README.md)、[JobsReverseIPA.py](./JobsReverseIPA.py/README.md)、[JobsSystemMonitor.py](./JobsSystemMonitor.py/README.md)、[LANFileServer.py](./LANFileServer.py/README.md)。
 * `JobsCodexTokenMonitor.py/` 当前是本仓内普通工具目录，保存独立用量监控源码、资源和平台入口；下列流程由本仓统一列出。
 
-### <span id="jobs-toc-heading-15" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./JobsCodexTokenMonitor.py/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-16" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./JobsCodexTokenMonitor.py/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在本机生成 JobsCodexTokenMonitor 的 APP / DMG，并打开本次成品。
 
@@ -304,7 +334,7 @@ output/
 * 打包并校验 APP，封装 DMG，统一输出到 `dist/YYYY.MM.DD HH-mm-ss/`。
 * 更新第一层产物快捷方式，打开产物目录，再启动本次 APP；失败时查看系统临时目录中的构建日志。
 
-### <span id="jobs-toc-heading-16" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./JobsCodexTokenMonitor.py/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-17" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./JobsCodexTokenMonitor.py/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成 JobsCodexTokenMonitor 的 EXE 分发目录与 ZIP。
 
