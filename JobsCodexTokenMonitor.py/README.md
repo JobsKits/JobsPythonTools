@@ -123,6 +123,8 @@ JobsCodexTokenMonitor.py/
 
 需要 Python 3.11+，运行依赖只有 PySide6，构建另需 [**PyInstaller**](https://pyinstaller.org/)。Token 解析、标题索引与钩子配置使用标准库；不依赖账户工具、cryptography 或 psutil。macOS 额外使用系统 `hdiutil`，Windows 由系统 [**PowerShell**](https://learn.microsoft.com/powershell/) 创建快捷方式；不使用 VBS 代理启动。Windows ZIP 包含 EXE 和 `_internal/` 的完整运行目录，分发时不能只复制 EXE。
 
+Windows 构建输出与日志统一 UTF-8，仅设置当前构建进程及子进程；直接调用内层构建器同样处理 GBK 重定向。[构建辅助脚本说明](./JobsCodexTokenMonitor/scripts/README.md)列出入口、边界与隔离测试。
+
 Mac 外层脚本在自身具名函数中封装完整 [**Homebrew**](https://brew.sh/) / Python 自检，不依赖外置环境库。Brew 已有则更新自身与配方索引，无则安装；安装位置精确输入 `YES` 选系统目录，其它输入或回车选用户目录。Python 满足版本和标准库要求则复用，否则通过 Brew 修复并复检；不兼容旧虚拟环境改名备份再重建。健康依赖不重复安装；必需依赖缺失时直接回车安装，任意非空输入、EOF 或非交互取消，失败立即停止。
 
 开始构建前阅读自述并确认：只清理本工具固定 `./dist/` 的旧产物及对应快捷方式，拒绝符号链接和外部目录。输出使用 `dist/YYYY.MM.DD HH-mm-ss/`；成功验证后发布第一层 APP / DMG 相对链接或 EXE / ZIP 快捷方式，打开产物位置并启动监控。构建不安装钩子、不操作登录数据，成功结尾不等待回车；失败不启动旧包。macOS / Windows 分别本机打包，包未正式签名 / 公证。

@@ -3,4 +3,5 @@
 "/.jobs-markdown-toc/README.md" filter=jobs-markdown-toc
 "/JobsCodexTokenMonitor.py/README.md" filter=jobs-markdown-toc
 "/README.md" filter=jobs-markdown-toc
+"/JobsCodexTokenMonitor.py/JobsCodexTokenMonitor/scripts/README.md" filter=jobs-markdown-toc
 # jobs-markdown-toc:end
