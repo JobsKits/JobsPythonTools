@@ -65,7 +65,7 @@ JobsCodexTokenMonitor.py/
     └── tests/
 ```
 
-工程当前由直接父仓 `JobsPythonTools.py` 作为普通目录管理，父仓真实 `../.gitmodules` 尚无本工具条目。没有独立远端地址或 gitlink，不提供假设的克隆命令或平台解析表；将来登记子模块时需先确认真实仓库与提交。现有其它子模块的配置保持原样。
+工程由 [JobsPythonTools.py](../README.md#single-repository-management) 作为普通源码目录统一管理，与其它工具共用父仓版本和 `../.gitignore`；取得总仓即可获得本工程，独立构建与运行能力保留。文档目录转换使用父仓的外置工具。
 
 ## 二、<span id="settings">打开监控与设置面板</span> <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 

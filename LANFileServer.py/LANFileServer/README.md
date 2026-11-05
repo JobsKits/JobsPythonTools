@@ -1,0 +1,117 @@
+# `LANFileServer`
+
+![Jobs出品，必属精品](https://picsum.photos/1500/400)
+
+<!-- jobs-toc:start -->
+<!-- jobs-toc:source {"v":2,"token":"[toc]"} -->
+<details>
+<summary>📚 目录（点击展开 / 收起）</summary>
+
+- [🔥 前言](#jobs-toc-heading-1)
+- [一、运行方式](#jobs-toc-heading-2)
+  - [1.1、macOS](#jobs-toc-heading-3)
+  - [1.2、Windows](#jobs-toc-heading-4)
+- [二、操作流程](#jobs-toc-heading-5)
+- [三、风险说明](#jobs-toc-heading-6)
+- [四、Mac Python 环境自检](#jobs-toc-heading-7)
+
+</details>
+<!-- jobs-toc:end -->
+
+---
+
+## <span id="jobs-toc-heading-1" data-jobs-toc="v2">🔥 <font id=前言>前言</font></span><!-- jobs-toc:heading-end -->
+
+**最低支持系统：[Windows](https://www.microsoft.com/windows) 10 64 位（x64）。** 这是当前最低支持目标；具体最低 build 尚未锁定，完整实机兼容性仍待验证。
+
+`LANFileServer` 是一个用 [**Python**](https://www.python.org) 写的局域网文件服务器小工具。左侧拖入要暴露的文件 / 文件夹，右侧查看访问记录；每张共享卡片都能独立勾选“临时”和“允许上传”。勾选“临时”时由 Python 流式传输，不勾选时由本机 [**Nginx**](https://nginx.org/) 使用 `alias + sendfile` 直接输出文件字节，浏览器页面和上传控制仍由仅监听本机的 Python 后端负责。
+
+[**Windows**](https://www.microsoft.com/windows) **兼容范围：当前构建与成品测试目标为 Windows 10 / 11 x64；Windows XP、Vista、7、8、8.1 不支持当前图形依赖。** [**Qt 6.8 官方 Windows 平台表**](https://doc.qt.io/qt-6.8/windows.html)列出的 x64 基线为 Windows 10 1809+ / Windows 11；本项目未锁定具体运行库版本，不能据此承诺每次构建都兼容同一最低系统版本。
+
+成品已包含 [**Python**](https://www.python.org) 与图形依赖，运行成品无需另外安装 Python；源码运行和打包才需要开发依赖。EXE 架构随构建所用 Python 和依赖 wheel 决定，x86 / ARM64 尚无统一交付验收；Windows 原生界面与分发仍须在对应目标机验证。
+
+[项目配置](./pyproject.toml)声明 `Python>=3.9`、`PySide6>=6.7`，打包另需 `PyInstaller>=6.8`；这些版本仅设下限，Python 的最低版本不能代替 GUI 的系统要求。Windows 当前生成单文件 EXE，成品内置运行时；平台交付说明见[外层总说明](../README.md)。
+
+本目录保存启动器、依赖和 `lanfileserver/` 业务源码。完整功能、网页预览 / 上传 / 聊天操作和平台打包入口统一见 [外层总说明](../README.md)；新共享默认临时、关闭上传，界面端口默认 `8080`。
+
+## <span id="jobs-toc-heading-2" data-jobs-toc="v2">一、运行方式 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+### <span id="jobs-toc-heading-3" data-jobs-toc="v2">1.1、macOS <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+- 双击外层脚本会生成 `LANFileServer-macOS-架构.dmg`：
+
+  ```text
+  ../【MacOS】📦生成dmg.command
+  ```
+
+- 黑色运行窗口是打包过程窗口。打包时不要关闭；看到 `DMG 已生成` 后可以关闭。
+- 生成的 `.dmg` 会自动在 [**Finder**](https://support.apple.com/guide/mac-help/mchlp2605/mac) 中定位；用户可以直接打开 `.dmg` 里的 App，也可以把 App 拖入系统 `Applications` 文件夹。
+- 默认使用 [**Homebrew**](https://brew.sh/) 管理的 [**Python**](https://www.python.org) 创建项目虚拟环境，按当前 Mac 的 Intel 或 Apple Silicon 架构打包。
+- 第一次构建按所选 Python 下载兼容的 [**PySide6**](https://doc.qt.io/qtforpython-6/) 依赖，后续复用健康环境；Brew Python 不具备双架构时明确使用本机架构。
+
+### <span id="jobs-toc-heading-4" data-jobs-toc="v2">1.2、Windows <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+- 双击外层脚本即可：
+
+  ```text
+  ../【Windows】📦生成exe.bat
+  ```
+
+- 它会自动转到内部项目，创建或复用 `.venv`，安装缺失依赖，然后启动图形界面。
+
+## <span id="jobs-toc-heading-5" data-jobs-toc="v2">二、操作流程 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+1、拖入文件或文件夹到左侧列表，也可以点“添加文件 / 添加文件夹”。
+2、在每张共享卡片上独立选择模式：勾选“临时”使用 Python HTTP 服务，取消勾选使用 Nginx。
+3、文件夹项目可以勾选“允许上传”；浏览器上传的文件固定保存到该共享文件夹下的 `Uploads/`。
+4、设置端口，默认 `8080`。
+5、点击右上角“主题”按钮选择“跟随系统 / 白天模式 / 黑夜模式”；当前模式会显示在按钮上，选择结果会自动保存，下次启动继续使用。
+6、选中左侧某一个项目后点“启动”，这个按钮只启动当前选中的文件 / 文件夹；切换到已启动的项目时，按钮会显示“停止”。
+7、右侧表格会显示访问时间、访问人 IP、服务引擎、状态码、访问对象和路径。
+
+- 多个项目可以混用 Python 与 Nginx，所有项目继续共用界面中设置的同一个对外端口。
+- “跟随系统”会在系统切换浅色 / 深色外观时同步刷新界面；手动选择白天或黑夜模式后，界面不再跟随系统变化。
+- 每个项目都有自己的启动 / 停止状态；没有选中项目时，顶部启动按钮不可用。
+- 浏览器目录页采用响应式布局，支持目录搜索、系统分享、粘贴截图、文件夹递归拖放、实时上传进度和传输速度。
+- 浏览器顶部支持复制当前链接和显示本机生成的二维码，不依赖第三方二维码网站。
+- 每个共享项目提供独立的局域网聊天室，支持昵称、回车发送和每 `3` 秒增量刷新；消息仅保存在服务进程内，最多保留最近 `200` 条。
+- 文件列表支持按名称、最近修改时间和文件大小排序，图片文件直接显示缩略图；点击图片进入浏览器预览页，可用“缩小 / 放大”按钮按 `25%` 调整显示比例，也可用页面按钮或键盘 `←` / `→` 逐张翻阅同一目录内的图片。
+- `HEIC` / `HEIF` 图片详情页不会触发浏览器保存原文件：macOS 由系统 `sips` 临时转为 JPEG 预览流，Windows / Linux 由 [**Pillow**](https://python-pillow.org/) 与 [**pillow-heif**](https://github.com/bigcat88/pillow_heif) 转码；图片页直接承担预览，只保留“下载原文件”按钮用于返回原始图片。
+- 浏览器目录页里点击文件名或文件夹名默认查看；文件下载直接返回原文件并支持 `Range`、断点续传和音视频拖动，只有文件夹下载才生成 ZIP。
+- 勾选“允许上传”后，目录页会显示上传区，支持拖入文件 / 文件夹，也支持点“选择文件”“选择文件夹”后再点“上传”。
+- 拖入文件 / 文件夹后会先进入待上传队列，页面会弹窗询问是否现在上传；取消后不会立刻写入本机，仍可稍后手动点“上传”。
+- 上传按 `1 MB` 分块流式写入临时文件，不设置固定文件大小上限；上传前检查磁盘空间并保留 `32 MB` 安全余量，连接中断会清理临时文件，成功后原子移动到 `Uploads/`。
+- 文件夹上传会保留相对目录结构，同名文件会自动改名，不覆盖已有文件。
+- 开启“允许上传”后，访问者可以在二次确认后删除 `Uploads/` 目录内的普通文件；原始共享文件、目录和符号链接不允许从浏览器删除。
+- 右键左侧项目可以执行“启动 / 停止”、“复制URL”、“本机默认浏览器打开”、“Show in Finder”和“移除”；菜单里的启动状态跟当前项目同步。
+- 长按左侧项目后拖动，可以带动画调整项目显示顺序；排序不会改变已经生成的项目访问编号。
+- 顶部蓝色项目网址跟随当前选中的项目变化，点击即可复制并发送给同一局域网里的其它电脑。
+- 未启动服务且暂无访问记录时，右侧访问记录区域会显示 `启动服务以后查看`。
+- 右侧访问记录区域支持右键菜单，可以清除当前记录。
+- 混用时由 Nginx 对外监听：非临时项目的 `__raw` 文件路由由 Nginx 直接传输，临时项目以及所有页面/上传请求转发给仅在本机运行的 Python 后端；外部用户仍访问各项目自己的蓝色网址。
+- macOS 点击黄色最小化按钮后，主窗口会隐藏并驻留系统顶部菜单栏；点击图标可恢复窗口，菜单可停止服务并退出。
+- 如果关闭窗口时仍有服务运行，程序会询问是否驻留到顶部菜单栏继续运行；选择“停止服务并退出”才会关闭所有共享服务。
+
+## <span id="jobs-toc-heading-6" data-jobs-toc="v2">三、风险说明 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+- 这个工具会把左侧列表里的文件 / 文件夹暴露给同一局域网内能访问该端口的设备。
+- 不建议把隐私目录、系统目录、浏览器数据目录、密码文件拖入共享列表。
+- “允许上传”只对文件夹项目生效，上传目标固定为共享目录下的 `Uploads/`；开启后，同一局域网内能访问该 URL 的设备都可以向这个子目录写入文件。
+- 浏览器删除成功后不可撤销；删除范围虽然限制在 `Uploads/`，仍应只对可信局域网开启“允许上传”。
+- 聊天消息不会写入磁盘，但同一共享项目的访问者可以看到服务运行期间最近的聊天内容。
+- 上传不会覆盖已有同名文件，但仍应只对可信设备开放，并在使用后及时关闭共享或取消“允许上传”。
+- 只要有一个项目取消勾选“临时”，程序就会在首次启动时通过 [**Homebrew**](https://brew.sh/)（macOS）或可用的 Windows 包管理器自动准备 Nginx；程序只生成独立的运行配置，不会覆盖系统级 Nginx 配置。
+
+打包前会清理该应用工程的旧 `dist` 产物，清理失败则停止；成功后自动打开当前平台产物的磁盘位置并运行本次生成的 APP / EXE，结尾无需回车。失败时不启动软件；运行前的防误触确认保留。
+
+第一层交付目录与平台打包脚本同层保存 `dist/`，以及最新 APP / DMG 的相对符号链接（Mac）或 EXE / 分发包的 `.lnk`（Windows）。双击快捷方式即可接触成品，真实文件保留在 `dist/`；成功构建自动更新入口，清理旧产物时移除对应旧入口。尚无成品时不生成无效快捷方式。
+
+构建产物使用本机本地构建时间，格式为 `YYYY.MM.DD HH-mm-ss`（年月日时分秒），例如 `2020.06.04 12-23-21`。每次构建的 APP、DMG、EXE、ZIP 和配套文件统一保存到交付层 `../dist/YYYY.MM.DD HH-mm-ss/`，同次构建只取一次时间；第一层快捷方式指向本次时间目录，成功后打开该目录并启动其中的软件。旧产物沿用原有清理规则；历史产物缺少可靠构建时间时，不补写推测时间。
+
+## <span id="jobs-toc-heading-7" data-jobs-toc="v2">四、Mac Python 环境自检 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+实际使用 Python 的 Mac 入口通过脚本内部的具名函数执行环境自检，完整自检实现随该脚本携带。先阅读自述并确认，再自检 [**Homebrew**](https://brew.sh/)：已有安装执行 `brew update`，只更新自身和配方索引，不全量升级其它软件；缺少时安装并复检。安装路径精确输入 `YES` 选择系统标准目录，其它输入或回车选择用户目录；失败停止，不自动改换路线。新系统缺少 Command Line Tools 时按系统提示完成安装后重试。
+
+[**Python**](https://www.python.org) 使用 Homebrew 配方；实际版本和标准库满足工具要求时复用，不兼容时才安装 / 升级并复检。必需修复直接回车执行，任意非空输入（含空格）、EOF 或非交互缺失环境均停止。旧虚拟环境不兼容时完整改名备份后重建，保留备份。Homebrew 安装路径选择、更新、Python 版本与健康检查均封装在实际执行脚本内部，不依赖外部环境支持库、同步脚本或父仓文件。Windows 入口保持原有平台环境流程；运行已打包成品无需准备构建环境。
+
+<a id="🔚" href="#前言" style="font-size:17px; color:green; font-weight:bold;">我是有底线的➤点我回到首页</a>

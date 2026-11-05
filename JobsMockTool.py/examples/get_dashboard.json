@@ -1,0 +1,25 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "pageTitle": "HTTP Methods Demo",
+    "welcomeText": "欢迎回来，Jobs",
+    "profile": {
+      "nickname": "Jobs",
+      "city": "Bangkok",
+      "membership": {
+        "level": "VIP"
+      }
+    },
+    "stats": {
+      "orderCount": 23,
+      "pendingCount": 2,
+      "totalAmount": 9986
+    },
+    "quickActions": [
+      "查看订单",
+      "更新资料",
+      "下载文件"
+    ]
+  }
+}

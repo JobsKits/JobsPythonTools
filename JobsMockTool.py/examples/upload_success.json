@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "message": "upload success",
+  "data": {
+    "fileName": "",
+    "size": 0,
+    "description": "",
+    "category": "",
+    "contentType": "",
+    "preview": ""
+  }
+}

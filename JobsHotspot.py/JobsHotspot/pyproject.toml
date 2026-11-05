@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jobs-hotspot"
+version = "0.1.0"
+description = "Jobs Hotspot · wired/USB Internet to Wi-Fi on MacOS and Windows"
+requires-python = ">=3.11"
+dependencies = ["PySide6>=6.8,<7"]
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.22,<7"]
+
+[project.scripts]
+jobs-hotspot = "jobs_hotspot.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+jobs_hotspot = ["assets/*", "assets/**/*"]

@@ -1,0 +1,12 @@
+{
+  "code": 200,
+  "message": "profile updated",
+  "data": {
+    "profile": {
+      "nickname": "Jobs",
+      "city": "Bangkok",
+      "email": "jobs@example.com"
+    },
+    "requestEcho": {}
+  }
+}

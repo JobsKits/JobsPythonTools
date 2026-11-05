@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jobs-ssh-key-mgr"
+version = "0.1.0"
+description = "Jobs SSH Key Mgr · personal SSH key GUI"
+requires-python = ">=3.11"
+dependencies = ["PySide6>=6.8,<7"]
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.10,<7"]
+
+[project.scripts]
+jobs-ssh-key-mgr = "jobs_ssh_key_mgr.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+jobs_ssh_key_mgr = ["assets/preferences/*.svg", "assets/preferences/LICENSE", "assets/preferences/README.md"]

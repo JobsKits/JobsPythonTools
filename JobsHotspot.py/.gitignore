@@ -1,0 +1,8 @@
+dist/
+work/
+*.app
+*.dmg
+*.zip
+*.lnk
+__pycache__/
+*.py[cod]

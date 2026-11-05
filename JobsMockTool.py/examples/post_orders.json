@@ -1,0 +1,52 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "pageNo": 1,
+    "pageSize": 10,
+    "records": [
+      {
+        "orderNo": "ORD-20260324-0001",
+        "user": {
+          "name": "Jobs",
+          "phone": "13800000001",
+          "address": {
+            "province": "Guangdong",
+            "city": "Shenzhen",
+            "detail": "Nanshan Science Park"
+          }
+        },
+        "summary": {
+          "statusText": "已支付",
+          "finalAmount": 299
+        },
+        "products": [
+          {"name": "机械键盘", "count": 1, "sku": "KB-001", "price": 199},
+          {"name": "鼠标", "count": 1, "sku": "MS-002", "price": 100}
+        ],
+        "tags": ["paid", "demo"]
+      },
+      {
+        "orderNo": "ORD-20260324-0002",
+        "user": {
+          "name": "Tom",
+          "phone": "13800000002",
+          "address": {
+            "province": "Zhejiang",
+            "city": "Hangzhou",
+            "detail": "Xihu District"
+          }
+        },
+        "summary": {
+          "statusText": "已发货",
+          "finalAmount": 888
+        },
+        "products": [
+          {"name": "显示器", "count": 1, "sku": "DP-003", "price": 888}
+        ],
+        "tags": ["shipped", "demo"]
+      }
+    ],
+    "requestEcho": {}
+  }
+}

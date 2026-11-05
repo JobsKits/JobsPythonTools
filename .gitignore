@@ -65,3 +65,18 @@ output/
 *.lnk
 *.app
 *.zip
+
+# Feature-local caches migrated from the former child ignore files.
+/JobsCodexAccountSwitcher.py/**/work/
+/JobsCodexAccountSwitcher.py/**/.venv.backup*/
+/JobsCodexTokenMonitor.py/**/work/
+/JobsCodexTokenMonitor.py/**/.venv.backup*/
+/JobsSSHKeyMgr.py/**/work/
+/JobsSSHKeyMgr.py/**/.venv.backup*/
+/JobsSystemMonitor.py/**/work/
+
+# Remote Host's downloaded tools and native compiler caches.
+/JobsRemoteHost.py/JobsRemoteHost/tools/
+/JobsRemoteHost.py/**/.build/
+/JobsRemoteHost.py/**/.swiftpm/
+/JobsHotspot.py/**/work/
