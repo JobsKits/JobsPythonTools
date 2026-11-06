@@ -24,7 +24,7 @@ LANGUAGE_NAMES = {
 
 TR: dict[str, dict[str, str]] = {
     "zh_CN": {
-        "title": "Jobs Github SSH 配置辅助工具",
+        "title": "Jobs GitHub SSH 配置辅助工具",
         "subtitle": "填写绑定邮箱后自动配置。新密钥使用空口令，已有密钥不覆盖；远端登记需要 GitHub 授权。",
         "email": "绑定邮箱",
         "email_placeholder": "输入绑定邮箱（默认值可编辑）",
@@ -96,7 +96,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": '缺少藏文字体，请安装系统支持的藏文字体：Kailasa / Microsoft Himalaya / Noto Serif Tibetan。',
     },
     "zh_TW": {
-        "title": "Jobs Github SSH 設定輔助工具",
+        "title": "Jobs GitHub SSH 設定輔助工具",
         "subtitle": "填寫綁定信箱後自動設定。新金鑰使用空密碼，現有金鑰不覆寫；遠端登記需要 GitHub 授權。",
         "email": "綁定信箱",
         "email_placeholder": "輸入綁定信箱（預設值可編輯）",
@@ -168,7 +168,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": '缺少藏文字型，請安裝系統支援的藏文字型：Kailasa / Microsoft Himalaya / Noto Serif Tibetan。',
     },
     "bo": {
-        "title": "Jobs Github SSH སྒྲིག་འགོད་རོགས་རམ་ལག་ཆ།",
+        "title": "Jobs GitHub SSH སྒྲིག་འགོད་རོགས་རམ་ལག་ཆ།",
         "subtitle": "སྦྲེལ་ཡོད་པའི་གློག་འཕྲིན་ཁ་བྱང་བཀོད་རྗེས་རང་འགུལ་གྱིས་སྒྲིག་བཀོད་བྱེད། ལྡེ་མིག་གསར་པར་གསང་ཚིག་མེད། ཡོད་ཟིན་པའི་ལྡེ་མིག་མི་བརྗེ། རྒྱང་རིང་ཐོ་འགོད་ལ GitHub དབང་སྤྲོད་དགོས།",
         "email": "སྦྲེལ་ཡོད་གློག་འཕྲིན",
         "email_placeholder": "སྦྲེལ་ཡོད་གློག་འཕྲིན་ཁ་བྱང་འཇུག（སྔོན་སྒྲིག་བཟོ་བཅོས་ཆོག）",
@@ -240,7 +240,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'བོད་ཡིག་གི་ཡིག་གཟུགས་མེད། མ་ལག་གིས་རྒྱབ་སྐྱོར་བྱེད་པའི་ཡིག་གཟུགས་སྒྲིག་འཇུག་བྱོས། Kailasa / Microsoft Himalaya / Noto Serif Tibetan',
     },
     "en": {
-        "title": "Jobs Github SSH Setup Assistant",
+        "title": "Jobs GitHub SSH Setup Assistant",
         "subtitle": "Enter your linked email to configure SSH automatically. New keys have no passphrase; existing keys are preserved. GitHub authorization is required to register a public key.",
         "email": "Linked email",
         "email_placeholder": "Enter your linked email (the default is editable)",
@@ -312,7 +312,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'A Tibetan font is missing. Install a system-supported Tibetan font: Kailasa / Microsoft Himalaya / Noto Serif Tibetan.',
     },
     "ja": {
-        "title": "Jobs Github SSH 設定支援ツール",
+        "title": "Jobs GitHub SSH 設定支援ツール",
         "subtitle": "登録メールアドレスを入力すると自動設定します。新しい鍵にはパスフレーズを設定せず、既存の鍵は上書きしません。公開鍵の登録には GitHub の認可が必要です。",
         "email": "登録メールアドレス",
         "email_placeholder": "登録メールアドレスを入力（初期値は変更可能）",
@@ -384,7 +384,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'チベット文字のフォントがありません。システム対応フォントをインストールしてください：Kailasa / Microsoft Himalaya / Noto Serif Tibetan。',
     },
     "fr": {
-        "title": "Jobs Github SSH — Assistant de configuration",
+        "title": "Jobs GitHub SSH — Assistant de configuration",
         "subtitle": "Saisissez votre adresse e-mail associée pour configurer SSH automatiquement. Les nouvelles clés sont sans phrase secrète ; les clés existantes sont conservées. Une autorisation GitHub est requise pour enregistrer la clé publique.",
         "email": "Adresse e-mail associée",
         "email_placeholder": "Saisissez l’adresse e-mail associée (valeur par défaut modifiable)",
@@ -456,7 +456,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'Une police tibétaine est manquante. Installez une police prise en charge par le système : Kailasa / Microsoft Himalaya / Noto Serif Tibetan.',
     },
     "es": {
-        "title": "Jobs Github SSH — Asistente de configuración",
+        "title": "Jobs GitHub SSH — Asistente de configuración",
         "subtitle": "Introduce tu correo vinculado para configurar SSH automáticamente. Las claves nuevas no tienen frase de contraseña; las existentes se conservan. Se requiere autorización de GitHub para registrar la clave pública.",
         "email": "Correo vinculado",
         "email_placeholder": "Introduce el correo vinculado (puedes editar el valor predeterminado)",
@@ -528,7 +528,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'Falta una fuente tibetana. Instala una fuente compatible con el sistema: Kailasa / Microsoft Himalaya / Noto Serif Tibetan.',
     },
     "de": {
-        "title": "Jobs Github SSH — Konfigurationsassistent",
+        "title": "Jobs GitHub SSH — Konfigurationsassistent",
         "subtitle": "Geben Sie Ihre verknüpfte E-Mail-Adresse ein, um SSH automatisch einzurichten. Neue Schlüssel haben keine Passphrase; vorhandene Schlüssel bleiben erhalten. Zum Registrieren des öffentlichen Schlüssels ist eine GitHub-Autorisierung erforderlich.",
         "email": "Verknüpfte E-Mail-Adresse",
         "email_placeholder": "Verknüpfte E-Mail-Adresse eingeben (Vorgabe ist bearbeitbar)",
@@ -600,7 +600,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'Eine tibetische Schriftart fehlt. Installieren Sie eine vom System unterstützte Schriftart: Kailasa / Microsoft Himalaya / Noto Serif Tibetan.',
     },
     "ru": {
-        "title": "Jobs Github SSH — помощник настройки",
+        "title": "Jobs GitHub SSH — помощник настройки",
         "subtitle": "Введите привязанный адрес электронной почты для автоматической настройки SSH. Новые ключи создаются без парольной фразы; существующие ключи сохраняются. Для регистрации открытого ключа нужна авторизация GitHub.",
         "email": "Привязанный адрес почты",
         "email_placeholder": "Введите привязанный адрес почты (значение по умолчанию можно изменить)",
@@ -672,7 +672,7 @@ TR: dict[str, dict[str, str]] = {
         "font_missing": 'Отсутствует тибетский шрифт. Установите поддерживаемый системой шрифт: Kailasa / Microsoft Himalaya / Noto Serif Tibetan.',
     },
     "ko": {
-        "title": "Jobs Github SSH 설정 도우미",
+        "title": "Jobs GitHub SSH 설정 도우미",
         "subtitle": "연결된 이메일을 입력하면 SSH를 자동으로 설정합니다. 새 키는 암호 없이 생성하며 기존 키는 덮어쓰지 않습니다. 공개 키 등록에는 GitHub 인증이 필요합니다.",
         "email": "연결된 이메일",
         "email_placeholder": "연결된 이메일 입력 (기본값 수정 가능)",

@@ -353,6 +353,12 @@ class Window(QWidget):
     def sync_generate_action(self):
         key = 'regenerate' if self.has_existing_key else 'generate'
         self.generate.setText(self.text(key))
+        name = 'danger' if self.has_existing_key else 'primary'
+        if self.generate.objectName() != name:
+            self.generate.setObjectName(name)
+            self.generate.style().unpolish(self.generate)
+            self.generate.style().polish(self.generate)
+            self.generate.update()
 
     def confirm_regeneration(self):
         dialog = QMessageBox(self)
@@ -367,7 +373,9 @@ class Window(QWidget):
                             algorithm=self.algorithm.currentText())
         dialog.setInformativeText(self.text('regenerate_prompt') + '\n\n' + details)
         confirm = dialog.addButton(self.text('regenerate'), QMessageBox.ButtonRole.AcceptRole)
-        confirm.setObjectName('primary')
+        confirm.setObjectName('danger')
+        confirm.style().unpolish(confirm)
+        confirm.style().polish(confirm)
         cancel = dialog.addButton(self.text('cancel'), QMessageBox.ButtonRole.RejectRole)
         dialog.setDefaultButton(cancel)
         dialog.setEscapeButton(cancel)
@@ -500,6 +508,10 @@ class Window(QWidget):
             QPushButton#primary { background: #2168d5; color: white; border-color: #2168d5; }
             QPushButton#primary:hover { background: #1855b5; }
             QPushButton#primary:disabled { background: %(surface)s; color: %(disabled)s; border-color: %(border)s; }
+            QPushButton#danger { background: #c91f3b; color: #ffffff; border-color: #c91f3b; }
+            QPushButton#danger:hover { background: #af1932; border-color: #af1932; }
+            QPushButton#danger:pressed { background: #95152a; border-color: #95152a; }
+            QPushButton#danger:disabled { background: %(surface)s; color: %(disabled)s; border-color: %(border)s; }
             QPushButton:disabled, QLineEdit:disabled, QComboBox:disabled { color: %(disabled)s; }
             QProgressBar { background: %(surface)s; border: none; }
             QProgressBar::chunk { background: #4384ee; }

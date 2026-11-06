@@ -413,7 +413,7 @@ class UiTests(unittest.TestCase):
                 self.window.resize(width, 900)
                 self.app.processEvents()
                 with self.subTest(width=width, language=language):
-                    self.assertIn('Jobs Github SSH', self.window.heading.text())
+                    self.assertIn('Jobs GitHub SSH', self.window.heading.text())
                     self.assertIn('SSH', self.window.windowTitle())
                     self.assertLessEqual(self.window.language.height(), 30)
                     self.assertLessEqual(self.window.theme.height(), 30)

@@ -14,7 +14,7 @@ def directory_readme(key: Path) -> str:
 
 ## 🔥 <span id="前言">前言</span>
 
-> 本目录供 [**OpenSSH**](https://www.openssh.com/) 保存当前用户的连接配置、个人密钥和远端主机身份记录。Jobs Github SSH 配置辅助工具仅在 `README.md` 不存在时生成本说明；已有说明不会覆盖、追加或更新。
+> 本目录供 [**OpenSSH**](https://www.openssh.com/) 保存当前用户的连接配置、个人密钥和远端主机身份记录。Jobs GitHub SSH 配置辅助工具仅在 `README.md` 不存在时生成本说明；已有说明不会覆盖、追加或更新。
 
 首次生成本说明时使用的私钥文件为 `{key.name}`，对应公钥为 `{key.name}.pub`。后续切换算法或账号时，请以工具执行结果和 `config` 中的 `IdentityFile` 为准。
 
