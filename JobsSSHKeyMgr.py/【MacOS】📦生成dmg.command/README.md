@@ -36,4 +36,7 @@
 实际构建确认后只清理本工具外层固定 `dist`，输出 APP / DMG 到外层 `dist/YYYY.MM.DD HH-mm-ss/`。验证后更新第一层相对链接、打开当次磁盘位置并启动当次 APP，不在成功结尾等待。日志为系统临时目录中的 `JobsSSHKeyMgr-build.log`。取消、EOF、安装或清理失败会停止，不回退启动旧包。
 
 [构建器详细说明](../JobsSSHKeyMgr/scripts/build.py/README.md)列出依赖、`--prepared` 参数与保护边界。已完成脚本语法、帮助页、隔离保护检查及本机 arm64 APP / DMG 构建；APP 已启动，签名、DMG 和 Python 运行库 ZIP 校验通过。未安装依赖，未公证或跨机分发。
+
+**终端配色保护：** 独立运行时，在支持完整保存与恢复配色的交互终端中临时使用黑底白字及统一强调色；正常结束、失败或可捕获中断后恢复进入前的配色，不修改终端全局偏好或 Shell 启动配置。不支持完整保护、无交互终端、`NO_COLOR`、既有纯文本模式和 Sourcetree 场景不切换配色，并沿用纯文本输出约定。强制终止（如 `kill -9`）无法由脚本自身保证恢复，请使用运行时显示的独立恢复入口。
+
 <a id="🔚" href="#前言" style="font-size:17px; color:green; font-weight:bold;">我是有底线的➤点我回到首页</a>
