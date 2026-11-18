@@ -10,15 +10,15 @@
 - [🔥 前言](#jobs-toc-heading-1)
 - [一、目录结构](#jobs-toc-heading-2)
 - [二、打包方式](#jobs-toc-heading-3)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-4)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-5)
+  - [【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](#jobs-toc-heading-4)
+  - [【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](#jobs-toc-heading-5)
 - [三、成品运行](#jobs-toc-heading-6)
 - [四、当前能力](#jobs-toc-heading-7)
 - [五、风险说明](#jobs-toc-heading-8)
 - [六、Mac Python 环境自检](#jobs-toc-heading-9)
 - [七、本仓目录与脚本入口](#repository-layout-and-entrypoints)
-  - [IPA环境体检.command](#jobs-toc-heading-11)
-  - [build\_doctor\_exe.ps1](#jobs-toc-heading-12)
+  - [【MacOS】IPA环境体检.command/【MacOS】IPA环境体检.command](#jobs-toc-heading-11)
+  - [【Windows】build\_doctor\_exe.ps1/【Windows】build\_doctor\_exe.ps1](#jobs-toc-heading-12)
 
 </details>
 <!-- jobs-toc:end -->
@@ -44,8 +44,8 @@
 ```text
 .
 ├── README.md
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 └── JobsReverseIPA/
     ├── pyproject.toml
     ├── requirements.txt
@@ -61,15 +61,15 @@
 ```
 
 - `./README.md`：外层总说明，统一解释 macOS / Windows 打包入口和内层 Python 工程。
-- `./【MacOS】📦生成dmg.command`：macOS 打包入口，双击后构建 `.app` 和 `.dmg`。
-- `./【Windows】📦生成exe.bat`：Windows 打包入口，在 Windows 本机生成 GUI 主程序和环境体检 `.exe`。
+- `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command`：macOS 打包入口，双击后构建 `.app` 和 `.dmg`。
+- `./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat`：Windows 打包入口，在 Windows 本机生成 GUI 主程序和环境体检 `.exe`。
 - `./JobsReverseIPA/`：内层 Python 工程目录，保存源码、依赖、doctor、规则、模板、工具链和构建产物。
 
 外层 `.bat` / `.command` 不使用同名文件夹包裹，也不分别放独立 `README.md`；两端打包说明统一收口在本文件。
 
 ## <span id="jobs-toc-heading-3" data-jobs-toc="v2">二、打包方式 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
-### <span id="jobs-toc-heading-4" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-4" data-jobs-toc="v2">[【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 生成 IPA 静态分析工具的 macOS APP / DMG，并附带环境体检入口。
 
@@ -77,13 +77,13 @@
 * 创建或复用内层 `.venv/`，检查构建依赖。
   * 必需依赖缺失：回车安装，任意非空输入取消；失败停止。
 * 输入 `YES` 后清理旧 `build/` 与外层 `dist/`，其它输入取消构建。
-* 构建并校验 APP、执行本地临时签名，封装含 `IPA环境体检.command` 的 DMG。
+* 构建并校验 APP、执行本地临时签名，封装含 `【MacOS】IPA环境体检.command/【MacOS】IPA环境体检.command` 的 DMG。
 * 在构建时间目录输出成品、更新快捷方式，打开目录并启动 APP；日志位于系统临时目录。
 
 在 Finder 中双击：
 
 ```text
-./【MacOS】📦生成dmg.command
+./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
 ```
 
 脚本会进入内层 `./JobsReverseIPA/`，创建或复用 `.venv`，安装构建依赖，经 `YES` 确认后清理旧 `build` / `dist`，再通过 [**PyInstaller**](https://pyinstaller.org/) 构建 App 和 DMG。
@@ -95,7 +95,7 @@
 ./dist/YYYY.MM.DD HH-mm-ss/IPA-Reverse-Analysis-Tool-macOS.dmg
 ```
 
-### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成 IPA 分析 GUI 与环境体检 EXE。
 
@@ -108,12 +108,12 @@
 在 Windows 中双击：
 
 ```text
-./【Windows】📦生成exe.bat
+./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ```
 
 脚本会进入内层 `./JobsReverseIPA/`，创建或复用 `.venv`，安装依赖，经 `YES` 确认后清理旧 `build` / `dist`，再构建 GUI 主程序和 `IPA环境体检.exe`。Windows `.exe` 必须在 Windows 本机生成，macOS 不负责交叉构建。
 
-内层 [PowerShell 体检构建辅助脚本](./JobsReverseIPA/doctor/windows/build_doctor_exe.ps1) 会检查每次 Python 命令的退出码，任一步失败立即停止；仅在 `IPA环境体检.exe` 存在且非空时显示成功。该辅助入口使用当前 PATH 中的 Python，单独调用时也会安装 / 更新构建依赖。
+内层 [PowerShell 体检构建辅助脚本](./JobsReverseIPA/doctor/windows/【Windows】build_doctor_exe.ps1/【Windows】build_doctor_exe.ps1) 会检查每次 Python 命令的退出码，任一步失败立即停止；仅在 `IPA环境体检.exe` 存在且非空时显示成功。该辅助入口使用当前 PATH 中的 Python，单独调用时也会安装 / 更新构建依赖。
 
 构建产物：
 
@@ -175,8 +175,8 @@ python3 -m ipa_reverse_tool.main gui
 ```text
 .
 ├── .gitignore
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── JobsReverseIPA/
 │   ├── assets/
 │   ├── doctor/
@@ -195,7 +195,7 @@ python3 -m ipa_reverse_tool.main gui
 
 * `JobsReverseIPA/ipa_reverse_tool/` 保存 GUI、命令行与分析逻辑；`rules/`、`templates/` 为规则和报告模板，`doctor/` 为独立环境工具。
 
-### <span id="jobs-toc-heading-11" data-jobs-toc="v2">[IPA环境体检.command](./JobsReverseIPA/doctor/macos/IPA环境体检.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-11" data-jobs-toc="v2">[【MacOS】IPA环境体检.command/【MacOS】IPA环境体检.command](./JobsReverseIPA/doctor/macos/【MacOS】IPA环境体检.command/【MacOS】IPA环境体检.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 检查并修复 IPA 分析所需环境，直接在终端显示体检结果。
 
@@ -206,7 +206,7 @@ python3 -m ipa_reverse_tool.main gui
 * 检查 Apple CLT、Homebrew 公式、radare2 命令及 Ghidra / jtool2 等工具，按当前选择安装、升级或提示人工处理。
 * 在终端汇总结果并保留日志，不默认生成 `doctor_report` 文件。
 
-### <span id="jobs-toc-heading-12" data-jobs-toc="v2">[build_doctor_exe.ps1](./JobsReverseIPA/doctor/windows/build_doctor_exe.ps1)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-12" data-jobs-toc="v2">[【Windows】build_doctor_exe.ps1/【Windows】build_doctor_exe.ps1](./JobsReverseIPA/doctor/windows/【Windows】build_doctor_exe.ps1/【Windows】build_doctor_exe.ps1)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 单独构建可分发的 Windows IPA 环境体检 EXE。
 

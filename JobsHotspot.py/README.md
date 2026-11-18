@@ -2,7 +2,20 @@
 
 ![Jobs出品，必属精品](https://picsum.photos/1500/400)
 
-[toc]
+<!-- jobs-toc:start -->
+<!-- jobs-toc:source {"v":2,"token":"[toc]"} -->
+<details>
+<summary>📚 目录（点击展开 / 收起）</summary>
+
+- [🔥 前言](#%E5%89%8D%E8%A8%80)
+- [一、使用流程与流量含义](#jobs-toc-heading-2)
+- [二、平台能力与权限边界](#jobs-toc-heading-3)
+- [三、语言、主题与离线行为](#jobs-toc-heading-4)
+- [四、工程与打包交付](#jobs-toc-heading-5)
+- [五、版本、许可与验证范围](#jobs-toc-heading-6)
+
+</details>
+<!-- jobs-toc:end -->
 
 ---
 
@@ -19,7 +32,7 @@
 
 平台成品携带 Python、Qt 及本地图片资源；普通用户运行成品无需安装 Python。源码构建仍需要 Python 3.11+ 和对应平台工具。
 
-## 一、使用流程与流量含义 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-2" data-jobs-toc="v2">一、使用流程与流量含义 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 - 先插入具有网络功能的实体连接，例如以太网、USB 以太网或手机 USB 网络共享。普通充电线和无网络驱动的 USB 设备不能作为网络入口。
 - Wi-Fi 硬件必须存在、无线电打开，且驱动及系统策略允许创建热点。仅通过 Wi-Fi 接入互联网时，本应用不提供 Wi-Fi 转 Wi-Fi 中继。
@@ -29,7 +42,7 @@
 
 显示的是所选网络适配器的流量，包含电脑自身通信，并非热点客户端独占流量；缺少可信计数时显示未知值，不伪造为零。接口变化、断线或统计计数重置后重新建立速率基线。
 
-## 二、平台能力与权限边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-3" data-jobs-toc="v2">二、平台能力与权限边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 | 平台 | 控制方式 | 初次准备及失败处理 |
 | --- | --- | --- |
@@ -42,13 +55,13 @@ MacOS 首次需要在系统设置中配置匹配的实体来源及唯一 Wi-Fi �
 
 Windows 目标为 Windows 10／11，使用系统 Windows PowerShell 5.1 和 WinRT。当前同时存在多块物理 Wi-Fi 网卡时禁用启动，避免无法确定系统默认输出；SSID 限 1–32 个 UTF-8 字节，密码限 8–63 个可打印 ASCII 字符。输入还需对应 WinRT 网络配置报告 InternetAccess。入口掉线后，只要可重新取得运行中热点管理器仍可停止；全部配置消失而无法确认状态时，进入系统设置处理。
 
-## 三、语言、主题与离线行为 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-4" data-jobs-toc="v2">三、语言、主题与离线行为 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 右上角的语言与主题入口参考 SSHKeyMgr 的紧凑图文菜单：简体中文、繁体中文、藏文、英文、日文、法文、西班牙文、德文、俄罗斯文、韩文；主题包含白天、黑夜、跟随系统。选择保存到当前用户设置，跟随系统时响应系统外观变化。动态网络输入列表提供无数据提示及重新检测入口。
 
 应用为本机硬件工具，所有状态和写操作通过系统后端处理，不依赖远端 API。离线演示 `--demo` 使用明确标识的模拟状态，无法改变系统热点；真实系统查询失败时显示未知／不可用，不把演示状态自动用于真实开关。图片资源随包读取，运行时不请求网络图片。
 
-## 四、工程与打包交付 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-5" data-jobs-toc="v2">四、工程与打包交付 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 ```text
 JobsHotspot.py/
@@ -68,7 +81,7 @@ JobsHotspot.py/
 
 构建日志为系统临时目录中的 `JobsHotspot-build.log`。发布目录的 `build-info.json` 记录构建平台、架构、依赖版本和分发包摘要。用户设置由 Qt 当前用户配置存储管理；热点密码不应写入日志或普通偏好文件，系统热点配置由系统保管。
 
-## 五、版本、许可与验证范围 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
+## <span id="jobs-toc-heading-6" data-jobs-toc="v2">五、版本、许可与验证范围 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 本工具随当前 Python 工具集管理，未创建独立 Git 仓库或新增子模块；此目录没有自己的 `.gitmodules`。APP 为本地／临时签名构建，尚不代表 Developer ID 公证；Windows 包未做 Authenticode 签名。MacOS 另一 CPU 架构及 Windows 包分别在对应系统／架构生成并验收。
 

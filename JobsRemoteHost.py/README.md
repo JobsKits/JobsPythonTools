@@ -10,8 +10,8 @@
 - [🔥 前言](#jobs-toc-heading-1)
 - [一、目录与文件](#project-layout)
 - [二、打包和运行成品](#package-and-run)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-4)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-5)
+  - [【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](#jobs-toc-heading-4)
+  - [【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](#jobs-toc-heading-5)
 - [三、环境与依赖](#environment)
   - [3.1、macOS 自检](#jobs-toc-heading-7)
   - [3.2、依赖安装与停止条件](#jobs-toc-heading-8)
@@ -57,8 +57,8 @@ EXE 架构随构建 Python 与依赖决定，随包 cloudflared 默认使用 amd
 ```text
 仓库根目录/
 ├── README.md
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── icon.png
 ├── JobsRemoteHost/
 │   ├── JobsRemoteHost.py
@@ -80,7 +80,7 @@ EXE 架构随构建 Python 与依赖决定，随包 cloudflared 默认使用 amd
 | `JobsRemoteHost/JobsRemoteHost.spec` | [**PyInstaller**](https://pyinstaller.org/) 配置，生成 macOS `.app` 或 Windows `.exe`，打包根目录的共享 `icon.png`。 |
 | `JobsRemoteHost/requirements.txt` | 运行依赖：屏幕采集、JPEG 压缩、鼠标键盘控制和菜单栏图标。 |
 | `JobsRemoteHost/requirements-build.txt` | 引入运行依赖并补充打包依赖。 |
-| `JobsRemoteHost/scripts/artifact_shortcuts.py` | 清理和更新交付层的最新产物快捷方式。 |
+| `JobsRemoteHost/scripts/artifact_shortcuts.py/artifact_shortcuts.py` | 清理和更新交付层的最新产物快捷方式。 |
 | `Package.swift`、`Sources/`、`Tests/` | 独立 Swift 原型及测试，使用 macOS 原生窗口和屏幕采集能力。 |
 | `relay-server/` | Swift 原型使用的 [**Node.js**](https://nodejs.org) 自建中继实验。 |
 
@@ -90,7 +90,7 @@ EXE 架构随构建 Python 与依赖决定，随包 cloudflared 默认使用 amd
 
 在目标系统上双击根目录对应脚本，或在仓库根目录运行以下命令。默认分别执行 `build-dmg` / `build-exe`，不需要进入内层查找另一份入口。
 
-### <span id="jobs-toc-heading-4" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-4" data-jobs-toc="v2">[【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 生成远程协助工具的 macOS APP / DMG，或进行源码调试与协议自检。
 
@@ -102,14 +102,14 @@ EXE 架构随构建 Python 与依赖决定，随包 cloudflared 默认使用 amd
 * 在构建时间目录保存成品、更新快捷方式，打开产物目录并启动 APP；日志位于系统临时目录。
 
 ```shell
-./【MacOS】📦生成dmg.command
+./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
 ```
 
 生成 `dist/YYYY.MM.DD HH-mm-ss/JobsRemoteHost-macOS-架构.dmg`，并保留同目录的 `JobsRemoteHost.app`。成功后脚本自动打开产物目录并启动 `.app`。分发时打开 DMG，把应用放到 `Applications` 或直接打开。
 
 首次使用按系统提示，在“系统设置 → 隐私与安全性”中给实际运行的 `JobsRemoteHost.app` 授予屏幕录制和辅助功能权限。
 
-### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成远程协助 EXE，或启动源码与协议自检。
 
@@ -121,7 +121,7 @@ EXE 架构随构建 Python 与依赖决定，随包 cloudflared 默认使用 amd
 * 更新成品快捷方式，打开构建时间目录并启动新 EXE；任一步失败即停止。
 
 ```bat
-【Windows】📦生成exe.bat
+【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ```
 
 生成 `dist/YYYY.MM.DD HH-mm-ss/JobsRemoteHost-Windows.exe`。成功后脚本自动打开产物目录并启动该 EXE；分发时直接运行生成的 EXE。
@@ -155,21 +155,21 @@ Python 使用 Homebrew 配方；实际版本和标准库满足要求时复用，
 
 | 入口 | 默认参数 | 其它参数 |
 | --- | --- | --- |
-| `./【MacOS】📦生成dmg.command` | `build-dmg` | `run-app`、`self-test` |
-| `【Windows】📦生成exe.bat` | `build-exe` | `run-app`、`self-test` |
+| `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command` | `build-dmg` | `run-app`、`self-test` |
+| `【Windows】📦生成exe.bat/【Windows】📦生成exe.bat` | `build-exe` | `run-app`、`self-test` |
 
 - macOS 开发运行与脚本自检，会按入口规则准备环境：
 
   ```shell
-  ./【MacOS】📦生成dmg.command run-app
-  ./【MacOS】📦生成dmg.command self-test
+  ./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command run-app
+  ./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command self-test
   ```
 
 - Windows 开发运行与脚本自检：
 
   ```bat
-  【Windows】📦生成exe.bat run-app
-  【Windows】📦生成exe.bat self-test
+  【Windows】📦生成exe.bat/【Windows】📦生成exe.bat run-app
+  【Windows】📦生成exe.bat/【Windows】📦生成exe.bat self-test
   ```
 
 - 只验证 Python 协议，可直接运行源码自检，不启动窗口、不下载通道、不安装依赖：
@@ -254,8 +254,8 @@ Python 浏览器协议：
 ```text
 .
 ├── .gitignore
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── icon.png
 ├── JobsRemoteHost/
 │   ├── JobsRemoteHost.py

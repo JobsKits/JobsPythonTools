@@ -47,8 +47,8 @@
 JobsCodexTokenMonitor.py/
 ├── README.md
 ├── icon.png
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── dist/YYYY.MM.DD HH-mm-ss/
 │   ├── JobsCodexTokenMonitor.app            # macOS
 │   ├── JobsCodexTokenMonitor/               # Windows 完整运行目录
@@ -117,9 +117,9 @@ JobsCodexTokenMonitor.py/
 
 | 入口 | 用途 |
 | --- | --- |
-| `./【MacOS】📦生成dmg.command` | macOS 本机生成独立 APP / DMG |
-| `./【Windows】📦生成exe.bat` | Windows 本机生成独立 EXE / ZIP |
-| `./JobsCodexTokenMonitor/scripts/build.py` | 内层构建入口，保留同样的确认与安全边界 |
+| `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command` | macOS 本机生成独立 APP / DMG |
+| `./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat` | Windows 本机生成独立 EXE / ZIP |
+| `./JobsCodexTokenMonitor/scripts/build.py/build.py` | 内层构建入口，保留同样的确认与安全边界 |
 
 需要 Python 3.11+，运行依赖只有 PySide6，构建另需 [**PyInstaller**](https://pyinstaller.org/)。Token 解析、标题索引与钩子配置使用标准库；不依赖账户工具、cryptography 或 psutil。macOS 额外使用系统 `hdiutil`，Windows 由系统 [**PowerShell**](https://learn.microsoft.com/powershell/) 创建快捷方式；不使用 VBS 代理启动。Windows ZIP 包含 EXE 和 `_internal/` 的完整运行目录，分发时不能只复制 EXE。
 
@@ -136,14 +136,14 @@ python3 -m venv ./JobsCodexTokenMonitor/.venv
 ./JobsCodexTokenMonitor/.venv/bin/python -m pip install \
     -e ./JobsCodexTokenMonitor
 ./JobsCodexTokenMonitor/.venv/bin/python \
-    ./JobsCodexTokenMonitor/scripts/launch.py
+    ./JobsCodexTokenMonitor/scripts/launch.py/launch.py
 ```
 
 Windows PowerShell：
 
 ```powershell
 & .\JobsCodexTokenMonitor\.venv\Scripts\python.exe `
-    .\JobsCodexTokenMonitor\scripts\launch.py
+    .\JobsCodexTokenMonitor\scripts\launch.py\launch.py
 ```
 
 | 参数 | 行为 |

@@ -11,8 +11,8 @@
 - [一、目录结构](#jobs-toc-heading-2)
 - [二、当前能力](#jobs-toc-heading-3)
 - [三、打包入口](#jobs-toc-heading-4)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-5)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-6)
+  - [【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](#jobs-toc-heading-5)
+  - [【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](#jobs-toc-heading-6)
 - [四、成品运行环境](#jobs-toc-heading-7)
 - [五、输出目录](#jobs-toc-heading-8)
 - [六、平台边界](#jobs-toc-heading-9)
@@ -44,8 +44,8 @@ JobsAppTrafficMonitor 在 [**macOS**](https://www.apple.com/macos/) 使用 `nett
 ```text
 .
 ├── README.md
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 └── JobsAppTrafficMonitor/
     ├── pyproject.toml
     ├── icon.png
@@ -58,8 +58,8 @@ JobsAppTrafficMonitor 在 [**macOS**](https://www.apple.com/macos/) 使用 `nett
 ```
 
 - `./README.md`：外层总说明，统一解释 Python 工程、macOS 入口和 Windows 入口。
-- `./【MacOS】📦生成dmg.command`：macOS 打包入口，双击后生成 `.app` 和 `.dmg`。
-- `./【Windows】📦生成exe.bat`：Windows 打包入口，在 Windows 本机生成 `.exe`。
+- `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command`：macOS 打包入口，双击后生成 `.app` 和 `.dmg`。
+- `./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat`：Windows 打包入口，在 Windows 本机生成 `.exe`。
 - `./JobsAppTrafficMonitor/`：内层 Python 工程目录，保存源码、测试、配置、资源和构建辅助脚本。
 
 外层 `.bat` / `.command` 直接放在本目录；平台入口说明统一收口在本文件。
@@ -80,7 +80,7 @@ JobsAppTrafficMonitor 在 [**macOS**](https://www.apple.com/macos/) 使用 `nett
 
 JobsAppTrafficMonitor 不提供外层源码运行入口；用户运行程序时，应先通过对应平台脚本生成 `.dmg` 或 `.exe`，再从打包产物启动。
 
-### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 生成按 App 流量监控工具的 macOS APP / DMG。
 
@@ -93,14 +93,14 @@ JobsAppTrafficMonitor 不提供外层源码运行入口；用户运行程序时�
 双击外层脚本：
 
 ```text
-./【MacOS】📦生成dmg.command
+./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
 ```
 
 脚本自动补齐构建环境，通过 [**PyInstaller**](https://pyinstaller.org/) 生成 `.app`，再封装为自包含 `.dmg`。构建结束后 Finder 自动定位安装包。脚本执行本机临时签名，不包含 Apple Developer ID 和苹果公证。
 
 运行前脚本会打印内置自述并等待回车确认；确认前不会安装依赖或生成构建产物。日志写入系统临时目录中的 `【MacOS】📦生成dmg.log`。
 
-### <span id="jobs-toc-heading-6" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-6" data-jobs-toc="v2">[【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机构建按进程流量监控 EXE；采集需管理员权限。
 
@@ -114,7 +114,7 @@ JobsAppTrafficMonitor 不提供外层源码运行入口；用户运行程序时�
 把完整项目放到 Windows 电脑，双击外层脚本：
 
 ```text
-./【Windows】📦生成exe.bat
+./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ```
 
 脚本自动检查 Python，创建内部构建环境并生成自包含 `.exe`。Windows 安装包必须在 Windows 上构建，macOS 不负责交叉生成 EXE。
@@ -173,8 +173,8 @@ Windows 脚本会暂停展示内置说明，继续后可能通过 `winget` 安�
 ```text
 .
 ├── .gitignore
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── JobsAppTrafficMonitor/
 │   ├── assets/
 │   ├── icon.png
@@ -189,12 +189,12 @@ Windows 脚本会暂停展示内置说明，继续后可能通过 `winget` 安�
 
 ## 九、<span id="windows-etw-validation">Windows 采集验证</span> <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a>
 
-隔离用例 [`test_windows_etw.py`](./JobsAppTrafficMonitor/tests/test_windows_etw.py) 检查 Win64 结构布局、事件解码、payload PID、PID 复用与历史归属、EXE 归组、空闲后累计保留、速率归零、启动与撤回双失败后的清理重试，不启动系统跟踪。在内层工程运行时设置 `PYTHONPATH=src`，执行 `python -m unittest discover -s tests -p test_windows_etw.py`；Windows PowerShell 用 `$env:PYTHONPATH='src'` 设置当前进程环境。
+隔离用例 [`test_windows_etw.py`](./JobsAppTrafficMonitor/tests/test_windows_etw.py/test_windows_etw.py) 检查 Win64 结构布局、事件解码、payload PID、PID 复用与历史归属、EXE 归组、空闲后累计保留、速率归零、启动与撤回双失败后的清理重试，不启动系统跟踪。在内层工程运行时设置 `PYTHONPATH=src`，执行 `python -m unittest discover -s tests -t . -p test_windows_etw.py`；Windows PowerShell 用 `$env:PYTHONPATH='src'` 设置当前进程环境。
 
 原生验收只需 64 位 Python 3.11+，无需安装 Qt。管理员终端在本文目录执行：
 
 ```powershell
-python -B .\JobsAppTrafficMonitor\tests\windows_etw_smoke.py
+python -B .\JobsAppTrafficMonitor\tests\windows_etw_smoke.py\windows_etw_smoke.py
 ```
 
 该脚本创建本机 TCP echo 与 UDP 回环，检查真实 ETW 当前 PID 收发计数，再停止会话并按系统命名查询确认撤回；不访问互联网，不修改网络或代理。正常结果包含 `status: PASS`、实际 PID / EXE / 收发字节数和会话清理结果；权限不足和采集失败返回非零。二进制解码夹具通过不代表真实 Windows 采集、图形界面或 EXE 打包已经通过。

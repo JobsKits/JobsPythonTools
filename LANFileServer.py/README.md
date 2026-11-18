@@ -10,8 +10,8 @@
 - [🔥 前言](#jobs-toc-heading-1)
 - [一、目录结构](#jobs-toc-heading-2)
 - [二、运行方式](#jobs-toc-heading-3)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-4)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-5)
+  - [【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](#jobs-toc-heading-4)
+  - [【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](#jobs-toc-heading-5)
 - [三、使用说明](#jobs-toc-heading-6)
 - [四、日志与产物](#jobs-toc-heading-7)
 - [五、风险说明](#jobs-toc-heading-8)
@@ -23,8 +23,8 @@
   - [6.5、上传的文件在哪里](#jobs-toc-heading-14)
 - [七、Mac Python 环境自检](#jobs-toc-heading-15)
 - [八、本仓目录与脚本入口](#repository-layout-and-entrypoints)
-  - [启动LANFileServer.command](#jobs-toc-heading-17)
-  - [启动LANFileServer.bat](#jobs-toc-heading-18)
+  - [【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command](#jobs-toc-heading-17)
+  - [【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat](#jobs-toc-heading-18)
 
 </details>
 <!-- jobs-toc:end -->
@@ -64,8 +64,8 @@
 ```text
 .
 ├── README.md
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── dist/YYYY.MM.DD HH-mm-ss/LANFileServer-macOS-<本机架构>.dmg
 └── LANFileServer/
     ├── LANFileServer.py
@@ -81,23 +81,23 @@
     ├── README.md
     ├── requirements.txt
     ├── requirements-build.txt
-    ├── 启动LANFileServer.command
-    └── 启动LANFileServer.bat
+    ├── 【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command
+    └── 【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat
 ```
 
 - `./README.md`：当前外层目录说明。
-- `./【MacOS】📦生成dmg.command`：macOS 外层入口，双击后转交给 `./LANFileServer/启动LANFileServer.command`，并生成 `./dist/YYYY.MM.DD HH-mm-ss/LANFileServer-macOS-<本机架构>.dmg`。
-- `./【Windows】📦生成exe.bat`：Windows 外层入口，双击后转交给 `./LANFileServer/启动LANFileServer.bat`。
+- `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command`：macOS 外层入口，双击后转交给 `./LANFileServer/【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command`，并生成 `./dist/YYYY.MM.DD HH-mm-ss/LANFileServer-macOS-<本机架构>.dmg`。
+- `./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat`：Windows 外层入口，双击后转交给 `./LANFileServer/【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat`。
 - `./dist/YYYY.MM.DD HH-mm-ss/LANFileServer-macOS-<本机架构>.dmg`：macOS 可分发安装包，按构建机的 Intel 或 Apple Silicon 架构生成。
 - [内层工程](./LANFileServer/README.md)：保存源码、依赖、构建脚本和项目级说明；`.app` 与安装包保存到外层时间目录。
 
 ## <span id="jobs-toc-heading-3" data-jobs-toc="v2">二、运行方式 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
-### <span id="jobs-toc-heading-4" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-4" data-jobs-toc="v2">[【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 从外层目录一键生成 LANFileServer 的 macOS APP / DMG。
 
-* 显示用途，按脚本位置查找内层 `启动LANFileServer.command` 并检查执行权限。
+* 显示用途，按脚本位置查找内层 `【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command` 并检查执行权限。
   * 启动器缺失或不可执行：报告路径并停止。
 * 以 `build-dmg` 参数调用内层启动器，将输出目录指定为本仓外层。
 * 内层完成环境确认、旧产物清理、APP / DMG 生成及成品启动，外层返回其结果。
@@ -109,13 +109,13 @@
 - 双击外层脚本：
 
   ```text
-  ./【MacOS】📦生成dmg.command
+  ./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
   ```
 
 - 外层脚本会自动寻找内部项目启动器：
 
   ```text
-  ./LANFileServer/启动LANFileServer.command
+  ./LANFileServer/【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command
   ```
 
 - 内部启动器会准备 Homebrew 管理的本机架构构建环境、安装或复用依赖、打包 `.app`，最后在外层目录生成：
@@ -127,11 +127,11 @@
 - 黑色终端窗口是打包窗口。看到 `DMG 已生成` 后，可以关闭这个窗口。
 - `.dmg` 可以直接打开运行里面的 App，也可以把 App 拖入系统 `Applications` 文件夹。
 
-### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-5" data-jobs-toc="v2">[【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 从外层目录生成 LANFileServer 的 Windows EXE。
 
-* 按脚本位置定位 `LANFileServer/启动LANFileServer.bat`。
+* 按脚本位置定位 `LANFileServer/【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat`。
   * 找不到启动器：显示错误并停止。
 * 以 `build-exe` 参数转交内层启动器，由它准备依赖并清理外层旧 `dist/`。
 * 构建成功后打开目录并启动新 EXE，外层返回相同退出码。
@@ -139,13 +139,13 @@
 - 双击外层脚本：
 
   ```text
-  ./【Windows】📦生成exe.bat
+  ./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
   ```
 
 - 外层脚本会转交给内部项目启动器：
 
   ```text
-  ./LANFileServer/启动LANFileServer.bat
+  ./LANFileServer/【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat
   ```
 
 - 内部启动器会创建或复用 `.venv`、安装缺失依赖，然后启动图形界面。
@@ -206,7 +206,7 @@
 确认当前目录里存在：
 
 ```text
-./LANFileServer/启动LANFileServer.command
+./LANFileServer/【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command
 ```
 
 如果移动了目录，需要保持外层脚本和 `./LANFileServer/` 文件夹在同一个父目录里。
@@ -216,8 +216,8 @@
 在当前目录打开终端后执行：
 
 ```shell
-chmod +x ./【MacOS】📦生成dmg.command
-chmod +x ./LANFileServer/启动LANFileServer.command
+chmod +x ./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+chmod +x ./LANFileServer/【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command
 ```
 
 ### <span id="jobs-toc-heading-12" data-jobs-toc="v2">6.3、端口被占用 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
@@ -266,8 +266,8 @@ Uploads/
 ```text
 .
 ├── .gitignore
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── assets/
 ├── icon.png
 ├── LANFileServer/
@@ -280,14 +280,14 @@ Uploads/
 │   ├── requirements.txt
 │   ├── scripts/
 │   ├── tests/
-│   ├── 启动LANFileServer.bat
-│   └── 启动LANFileServer.command
+│   ├── 【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat
+│   └── 【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command
 └── README.md
 ```
 
 * `LANFileServer/LANFileServer.py` 是源码入口，`lanfileserver/` 保存共享服务与界面模块；`scripts/` 管理产物快捷方式，`tests/` 保存回归用例。
 
-### <span id="jobs-toc-heading-17" data-jobs-toc="v2">[启动LANFileServer.command](./LANFileServer/启动LANFileServer.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-17" data-jobs-toc="v2">[【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command](./LANFileServer/【MacOS】启动LANFileServer.command/【MacOS】启动LANFileServer.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 执行 LANFileServer 的 macOS 打包，或用 `run-app` 启动源码界面。
 
@@ -298,7 +298,7 @@ Uploads/
   * 当前 Python 不支持双架构构建：回退本机架构。
 * 封装 DMG、更新第一层快捷方式，打开构建时间目录并启动 APP；日志写入系统临时目录。
 
-### <span id="jobs-toc-heading-18" data-jobs-toc="v2">[启动LANFileServer.bat](./LANFileServer/启动LANFileServer.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-18" data-jobs-toc="v2">[【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat](./LANFileServer/【Windows】启动LANFileServer.bat/【Windows】启动LANFileServer.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 准备 LANFileServer 环境，默认运行界面，按参数生成 EXE。
 

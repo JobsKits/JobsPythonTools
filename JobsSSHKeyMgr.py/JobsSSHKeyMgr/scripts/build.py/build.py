@@ -676,17 +676,123 @@ import re as _jobs_prompt_re
 import sys as _jobs_prompt_sys
 
 
-def jobs_prompt_render(text, stream=None):
+"""Inlineable native Python URL display helpers; no I/O or environment mutation."""
+import re as _jobs_url_re
+
+
+# 只提取展示副本中的URL；查询、编码和配对括号保持原文。
+def jobs_url_ranges(text):
+    pattern = r'''[A-Za-z][A-Za-z0-9+.-]*://[^\s<>"'\x1b]+'''
+    punctuation = '，。；：！？、（）【】《》「」『』“”‘’'
+    result = []
+    offset = 0
+    while True:
+        match = _jobs_url_re.search(pattern, text[offset:])
+        if match is None:
+            return result
+        start = offset + match.start()
+        url = match.group()
+        for mark in punctuation:
+            at = url.find(mark)
+            if at >= 0:
+                url = url[:at]
+        while url:
+            last = url[-1]
+            unmatched = any(last == close and url.count(close) > url.count(opening)
+                            for opening, close in (('(', ')'), ('[', ']'), ('{', '}')))
+            if last in '.,;:!?' or unmatched:
+                url = url[:-1]
+            else:
+                break
+        result.append((start, start + len(url)))
+        offset = start + len(url)
+
+
+# 遮蔽地址，避免选项分段把URL路径中的Enter或查询分隔符当成询问语法。
+def jobs_url_mask(text):
+    output, tokens, offset, number = [], [], 0, 0
+    for start, end in jobs_url_ranges(text):
+        number += 1
+        token = '\x02U' + str(number) + '\x03'
+        while token in text:
+            number += 1
+            token = '\x02U' + str(number) + '\x03'
+        output.extend((text[offset:start], token))
+        tokens.append((token, text[start:end]))
+        offset = end
+    output.append(text[offset:])
+    return ''.join(output), tokens
+
+
+# 只给展示字符串着色，ANSI单独映射到可见字符，原上下文样式按顺序恢复。
+def jobs_url_render(text, color=False):
+    control = _jobs_url_re.compile(r'\x1b\][^\x1b\x07]*(?:\x07|\x1b\\)|\x1b\[[0-?]*[ -/]*[@-~]')
+    sgr = _jobs_url_re.compile(r'\x1b\[[0-9;:]*m')
+    value = control.sub(lambda match: match.group() if color and sgr.fullmatch(match.group()) else '', str(text))
+    if not color:
+        return value
+    styles, pieces, length, offset = {}, [], 0, 0
+    for match in sgr.finditer(value):
+        part = value[offset:match.start()]
+        pieces.append(part)
+        length += len(part)
+        styles[length] = styles.get(length, '') + match.group()
+        offset = match.end()
+    pieces.append(value[offset:])
+    visible = ''.join(pieces)
+    ranges = jobs_url_ranges(visible)
+    starts = {start for start, _ in ranges}
+    ends = {end - 1 for _, end in ranges}
+    active, output, in_url = '', [], False
+    for index in range(len(visible) + 1):
+        if index in styles:
+            tokens = styles[index]
+            output.append(tokens)
+            for match in sgr.finditer(tokens):
+                token = match.group()
+                fields = token[2:-1].split(';')
+                reset, item = token == '\x1b[m', 0
+                while item < len(fields):
+                    field = fields[item]
+                    if field == '0':
+                        reset = True
+                    if field in ('38', '48', '58') and item + 1 < len(fields):
+                        mode = fields[item + 1]
+                        item += 4 if mode == '2' else 2 if mode == '5' else 0
+                    item += 1
+                if reset:
+                    active = ''
+                active += token
+            if in_url:
+                output.append('\x1b[32;4m')
+        if index == len(visible):
+            break
+        if index in starts:
+            output.append('\x1b[32;4m')
+            in_url = True
+        output.append(visible[index])
+        if index in ends:
+            output.extend(('\x1b[0m', active))
+            in_url = False
+    return ''.join(output)
+
+
+def jobs_prompt_render(text, stream=None, question=False):
+    """显式询问突出青色题干；日志与普通展示仅保持原选项样式。"""
     stream = _jobs_prompt_sys.stdout if stream is None else stream
-    plain = _jobs_prompt_re.sub(r'\x1b\[[0-9;]*m', '', text)
+    plain = jobs_url_render(text, color=False)
     environment = _jobs_prompt_os.environ
     if ('NO_COLOR' in environment or not environment.get('TERM') or
             environment.get('TERM') == 'dumb' or environment.get('PLAIN_OUTPUT') == '1' or
             environment.get('IS_SOURCETREE_RUNTIME') == '1' or
+            any(key.upper().startswith(('SOURCETREE', 'SOURCE_TREE')) for key in environment) or
             not _jobs_prompt_sys.stdin.isatty() or not stream.isatty()):
         return plain
     red = _jobs_prompt_re.compile(r'(?:输入)?(?:任意|任何)(?:非空)?(?:字符|内容|输入|键)|非空(?:字符|内容|输入)?|其它输入|其他输入|\bType (?:anything|any\S*)|\bPress any key', _jobs_prompt_re.I)
     green = _jobs_prompt_re.compile(r'(?:直接|仅|只需|只|按下|按)?\s*(?:回车|回車)|\b(?:Enter|Return)\b', _jobs_prompt_re.I)
+    plain, url_tokens = jobs_url_mask(plain)
+    if not question and not red.search(plain) and not green.search(plain):
+        return jobs_url_render(text, color=True)
 
     def eligible_green(value):
         match = green.search(value)
@@ -699,7 +805,7 @@ def jobs_prompt_render(text, stream=None):
             return None
         return match
 
-    def segment(value, inherited=0):
+    def segment(value, inherited=0, is_question=False):
         if not value:
             return value
         arbitrary, enter = red.search(value), eligible_green(value)
@@ -707,24 +813,29 @@ def jobs_prompt_render(text, stream=None):
             left, right = value[:arbitrary.start()], value[arbitrary.start():]
             connector = _jobs_prompt_re.search(r'(?:或者|或)\s*$', left)
             if connector:
-                return segment(left[:connector.start()]) + connector.group() + segment(right, 31)
-            return segment(left) + segment(right, 31)
+                return segment(left[:connector.start()], 0, is_question) + connector.group() + segment(right, 31)
+            return segment(left, 0, is_question) + segment(right, 31)
         if not inherited and arbitrary and enter and arbitrary.start() < enter.start():
             connector = _jobs_prompt_re.search(r'或\s*(?:直接|仅|只需|只|按下|按)?(?:回车|回車)', value)
             if connector:
-                return segment(value[:connector.start()], 31) + '或' + segment(value[connector.start() + 1:])
+                return segment(value[:connector.start()], 31, is_question) + '或' + segment(value[connector.start() + 1:])
         match = arbitrary or enter
         kind = inherited or (31 if arbitrary else 32 if enter else 0)
         if not kind:
-            return value
+            return ('\x1b[1;36m' + value + '\x1b[0m') if is_question and value.strip() else value
         start = 0 if inherited else match.start()
-        return value[:start] + f'\x1b[1;{kind}m' + value[start:] + '\x1b[0m'
+        prefix = value[:start]
+        if is_question and prefix.strip():
+            prefix = '\x1b[1;36m' + prefix + '\x1b[0m'
+        return prefix + f'\x1b[1;{kind}m' + value[start:] + '\x1b[0m'
 
-    output, inherited, depth = [], 0, 0
+    output, inherited, depth, question_body = [], 0, 0, bool(question)
     parts = _jobs_prompt_re.split(r'([；;/|，,、？?：:=＝（）()\[\]【】\n])', plain)
     for index in range(0, len(parts), 2):
         part = parts[index]
-        output.append(segment(part, inherited))
+        output.append(segment(part, inherited, question_body))
+        if inherited or red.search(part) or eligible_green(part):
+            question_body = False
         if index + 1 >= len(parts):
             break
         boundary = parts[index + 1]
@@ -739,7 +850,10 @@ def jobs_prompt_render(text, stream=None):
                 inherited = 31 if red.search(part) else 32 if eligible_green(part) else 0
         elif not depth:
             inherited = 0
-    return ''.join(output)
+    formatted = ''.join(output)
+    for token, url in url_tokens:
+        formatted = formatted.replace(token, url)
+    return jobs_url_render(formatted, color=True)
 
 
 def jobs_prompt_print(*values, sep=' ', end='\n', file=None, flush=False):
@@ -749,7 +863,7 @@ def jobs_prompt_print(*values, sep=' ', end='\n', file=None, flush=False):
 
 
 if sys.version_info < (3, 11):
-    print('✖ 构建需要 Python 3.11+；请运行外层平台打包脚本自动检查运行时。', file=sys.stderr)
+    jobs_prompt_print('✖ 构建需要 Python 3.11+；请运行外层平台打包脚本自动检查运行时。', file=sys.stderr)
     raise SystemExit(1)
 
 import argparse
@@ -789,7 +903,7 @@ def confirm(message):
     if not sys.stdin.isatty():
         raise RuntimeError('没有可交互输入，请在终端运行；尚未安装或清理。')
     try:
-        answer = input(jobs_prompt_render(message + '（直接回车继续；输入任意字符或 Ctrl+C 取消）：'))
+        answer = input(jobs_prompt_render(message + '（直接回车继续；输入任意字符或 Ctrl+C 取消）：', question=True))
     except EOFError as error:
         raise RuntimeError('输入已结束，已停止。') from error
     if answer != '':
@@ -826,7 +940,7 @@ def run(command, cwd=ROOT):
                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                           text=True, encoding='utf-8', errors='replace') as process:
         for line in process.stdout:
-            print(line, end='', flush=True)
+            jobs_prompt_print(line, end='', flush=True)
             logging.info('%s', line.rstrip())
         if process.wait() != 0:
             raise subprocess.CalledProcessError(process.returncode, command)
@@ -885,7 +999,7 @@ def bootstrap():
     """依赖链：Python → 本工具 venv → pip → Qt/PyInstaller；只修复缺失层。"""
     current = Path(sys.executable)
     if not missing_requirements(current):
-        print('✔ 复用当前解释器的健康构建依赖；不安装、不升级依赖。')
+        jobs_prompt_print('✔ 复用当前解释器的健康构建依赖；不安装、不升级依赖。')
         return current
     environment = ROOT / '.venv'
     if environment.is_symlink() or (environment.exists() and not environment.is_dir()):
@@ -903,9 +1017,9 @@ def bootstrap():
             healthy_python = False
     missing = missing_requirements(python) if healthy_python else [item[0] for item in REQUIREMENTS.values()]
     if not missing:
-        print('✔ 复用本工具健康 .venv；不安装、不升级依赖。')
+        jobs_prompt_print('✔ 复用本工具健康 .venv；不安装、不升级依赖。')
         return python
-    print('缺少或不兼容的依赖：' + '、'.join(missing))
+    jobs_prompt_print('缺少或不兼容的依赖：' + '、'.join(missing))
     confirm('将在当前工具 .venv 中安装上述必需依赖，不升级已有健康依赖')
     if not healthy_python:
         if environment.exists():
@@ -913,7 +1027,7 @@ def bootstrap():
             if backup.exists() or backup.is_symlink():
                 raise RuntimeError(f'虚拟环境备份名称已被占用：{backup}')
             environment.rename(backup)
-            print(f'ℹ 原虚拟环境已完整保留：{backup}')
+            jobs_prompt_print(f'ℹ 原虚拟环境已完整保留：{backup}')
         venv.EnvBuilder(with_pip=True).create(environment)
     pip = subprocess.run([str(python), '-m', 'pip', '--version'], capture_output=True, env=child_environment())
     if pip.returncode:
@@ -1055,7 +1169,7 @@ def build(python):
     artifact, _ = validate_application(output)
     package = package_application(output, artifact, work)
     publish_shortcuts(OUTER, [artifact, package])
-    print(f'✔ 打包与校验成功：{output}', flush=True)
+    jobs_prompt_print(f'✔ 打包与校验成功：{output}', flush=True)
     reveal_and_launch(output, artifact)
 
 
@@ -1089,10 +1203,10 @@ if __name__ == '__main__':
     try:
         raise SystemExit(main())
     except KeyboardInterrupt:
-        print('\n已取消。', file=sys.stderr)
+        jobs_prompt_print('\n已取消。', file=sys.stderr)
         raise SystemExit(130)
     except Exception as error:
         if logging.getLogger().handlers:
             logging.exception('构建停止')
-        print(f'✖ 构建停止：{error}\n日志：{LOG_FILE}', file=sys.stderr)
+        jobs_prompt_print(f'✖ 构建停止：{error}\n日志：{LOG_FILE}', file=sys.stderr)
         raise SystemExit(1)

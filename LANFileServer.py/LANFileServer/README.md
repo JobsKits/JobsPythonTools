@@ -41,7 +41,7 @@
 - 双击外层脚本会生成 `LANFileServer-macOS-架构.dmg`：
 
   ```text
-  ../【MacOS】📦生成dmg.command
+  ../【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
   ```
 
 - 黑色运行窗口是打包过程窗口。打包时不要关闭；看到 `DMG 已生成` 后可以关闭。
@@ -54,7 +54,7 @@
 - 双击外层脚本即可：
 
   ```text
-  ../【Windows】📦生成exe.bat
+  ../【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
   ```
 
 - 它会自动转到内部项目，创建或复用 `.venv`，安装缺失依赖，然后启动图形界面。

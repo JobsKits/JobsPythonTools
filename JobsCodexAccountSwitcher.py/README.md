@@ -12,8 +12,8 @@
 - [二、目录与入口](#layout)
 - [三、账户设置与操作](#account-operations)
 - [四、开发与打包](#development)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-6)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-7)
+  - [【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](#jobs-toc-heading-6)
+  - [【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](#jobs-toc-heading-7)
 - [五、数据、日志与恢复](#data-recovery)
 - [六、验证与常见问题](#verification)
 - [七、本仓目录与脚本入口](#repository-layout-and-entrypoints)
@@ -60,8 +60,8 @@ Token 上下行监控由同级 [JobsCodexTokenMonitor](../JobsCodexTokenMonitor.
 JobsCodexAccountSwitcher.py/
 ├── README.md
 ├── icon.png
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── dist/YYYY.MM.DD HH-mm-ss/
 │   ├── JobsCodexAccountSwitcher.app         # macOS
 │   ├── JobsCodexAccountSwitcher/            # Windows 完整运行目录
@@ -101,9 +101,9 @@ JobsCodexAccountSwitcher.py/
 
 | 入口 | 环境、操作与输出 |
 | --- | --- |
-| `./【MacOS】📦生成dmg.command` | 内置 Homebrew / Python 自检，构建账户 APP / DMG |
-| `./【Windows】📦生成exe.bat` | 检查 Python 与 PowerShell，构建账户 EXE / ZIP |
-| `./JobsCodexAccountSwitcher/scripts/build.py` | 内层构建器，同样要求阅读自述并确认 |
+| `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command` | 内置 Homebrew / Python 自检，构建账户 APP / DMG |
+| `./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat` | 检查 Python 与 PowerShell，构建账户 EXE / ZIP |
+| `./JobsCodexAccountSwitcher/scripts/build.py/build.py` | 内层构建器，同样要求阅读自述并确认 |
 
 需要 Python 3.11+，依赖为 PySide6、[**cryptography**](https://cryptography.io/) 和 [**psutil**](https://psutil.readthedocs.io/)，构建另需 [**PyInstaller**](https://pyinstaller.org/)。健康依赖复用；缺少必需依赖时直接回车安装，任意非空输入、EOF 或非交互均取消；失败立即停止。
 
@@ -118,21 +118,21 @@ python3 -m venv ./JobsCodexAccountSwitcher/.venv
 ./JobsCodexAccountSwitcher/.venv/bin/python -m pip install \
     -e ./JobsCodexAccountSwitcher
 ./JobsCodexAccountSwitcher/.venv/bin/python \
-    ./JobsCodexAccountSwitcher/scripts/launch.py
+    ./JobsCodexAccountSwitcher/scripts/launch.py/launch.py
 ```
 
 Windows PowerShell：
 
 ```powershell
 & .\JobsCodexAccountSwitcher\.venv\Scripts\python.exe `
-    .\JobsCodexAccountSwitcher\scripts\launch.py
+    .\JobsCodexAccountSwitcher\scripts\launch.py\launch.py
 ```
 
 `--codex-home PATH` 指定数据目录；未指定时读取 `CODEX_HOME`，再回退当前用户的 `.codex`。Token 参数已移到独立监控工程，旧命令应改用独立工具。
 
 已打开的客户端可能继续执行旧钩子：旧 `--hook-report` 只输出合法 JSON 迁移提示并退出，旧 `--hook-launch` 静默退出。这两条退役路径只使用标准库，不读取会话、账户或输入事件，不启动 / 调用监控工具，也不打开账户窗口。监控 GUI、安装或移除钩子的参数仍拒绝；新钩子只应指向独立监控 APP。
 
-### <span id="jobs-toc-heading-6" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-6" data-jobs-toc="v2">[【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在本机生成 JobsCodexAccountSwitcher 的 APP / DMG，并打开本次成品。
 
@@ -142,7 +142,7 @@ Windows PowerShell：
 * 打包并校验 APP，封装 DMG，统一输出到 `dist/YYYY.MM.DD HH-mm-ss/`。
 * 更新第一层产物快捷方式，打开产物目录，再启动本次 APP；失败时查看系统临时目录中的构建日志。
 
-### <span id="jobs-toc-heading-7" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-7" data-jobs-toc="v2">[【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成 JobsCodexAccountSwitcher 的 EXE 分发目录与 ZIP。
 
@@ -189,8 +189,8 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src .venv/bin/python \
 ```text
 .
 ├── .gitignore
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── assets/
 ├── icon.png
 ├── JobsCodexAccountSwitcher/

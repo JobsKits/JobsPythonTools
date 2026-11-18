@@ -45,13 +45,13 @@
   - [9.1、打包命令](#jobs-toc-heading-36)
   - [9.2、安装方式](#jobs-toc-heading-37)
   - [9.3、首次打开被拦截](#jobs-toc-heading-38)
-  - [【MacOS】📦生成dmg.command](#jobs-toc-heading-39)
-  - [build\_macos.command](#jobs-toc-heading-40)
+  - [【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](#jobs-toc-heading-39)
+  - [【MacOS】build\_macos.command](#jobs-toc-heading-40)
 - [十、Windows 打包](#jobs-toc-heading-41)
   - [10.1、打包命令](#jobs-toc-heading-42)
   - [10.2、为什么不是单文件 exe](#jobs-toc-heading-43)
-  - [【Windows】📦生成exe.bat](#jobs-toc-heading-44)
-  - [build\_windows.bat](#jobs-toc-heading-45)
+  - [【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](#jobs-toc-heading-44)
+  - [【Windows】build\_windows.bat/【Windows】build\_windows.bat](#jobs-toc-heading-45)
 - [十一、依赖说明](#jobs-toc-heading-46)
 - [十二、常见问题](#jobs-toc-heading-47)
   - [12.1、顶部 3D 地球不显示](#jobs-toc-heading-48)
@@ -475,18 +475,18 @@ python app.py
 
 ### <span id="jobs-toc-heading-36" data-jobs-toc="v2">9.1、打包命令 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
-必须在 macOS 上执行。在项目目录双击 `【MacOS】📦生成dmg.command`，或从项目目录运行：
+必须在 macOS 上执行。在项目目录双击 `【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command`，或从项目目录运行：
 
 ```shell
-./【MacOS】📦生成dmg.command
+./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
 ```
 
-入口按脚本自身位置定位 `./build_macos.command/build_macos.command`，不依赖终端当前目录；项目可以放在不同用户名、中文或含空格的目录下。整个项目目录须保持完整，不能只把外层入口拷到桌面。
+入口按脚本自身位置定位 `./【MacOS】build_macos.command/【MacOS】build_macos.command`，不依赖终端当前目录；项目可以放在不同用户名、中文或含空格的目录下。整个项目目录须保持完整，不能只把外层入口拷到桌面。
 
-旧入口若报 `run_builder:2: no such file or directory`，更新外层入口；也可直接双击 `build_macos.command` 文件夹内的同名脚本。终端直接运行内层构建器的命令为：
+旧入口若报 `run_builder:2: no such file or directory`，更新外层入口；也可直接双击 `【MacOS】build_macos.command` 文件夹内的同名脚本。终端直接运行内层构建器的命令为：
 
 ```shell
-./build_macos.command/build_macos.command
+./【MacOS】build_macos.command/【MacOS】build_macos.command
 ```
 
 产物位置：
@@ -517,15 +517,15 @@ dist/YYYY.MM.DD HH-mm-ss/JobsMockTool-Installer.dmg
 
 ---
 
-### <span id="jobs-toc-heading-39" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-39" data-jobs-toc="v2">[【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command](./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 从仓库根目录进入 JobsMockTool 的 macOS 构建流程。
 
-* 按脚本位置找到同仓 `build_macos.command/build_macos.command`，原样转交参数。
+* 按脚本位置找到同仓 `【MacOS】build_macos.command/【MacOS】build_macos.command`，原样转交参数。
 * 由构建器展示说明并等待回车，再准备环境；清理旧产物前须输入 `YES`，其它输入取消。
 * 构建成功后由构建器打开产物目录并启动 APP；构建失败则向外返回失败状态。
 
-### <span id="jobs-toc-heading-40" data-jobs-toc="v2">[build_macos.command](./build_macos.command/build_macos.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-40" data-jobs-toc="v2">[【MacOS】build_macos.command](./【MacOS】build_macos.command/【MacOS】build_macos.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 macOS 本机生成 JobsMockTool APP 和拖拽安装 DMG。
 
@@ -542,7 +542,7 @@ dist/YYYY.MM.DD HH-mm-ss/JobsMockTool-Installer.dmg
 必须在 Windows 上执行：
 
 ```bat
-build_windows.bat
+【Windows】build_windows.bat/【Windows】build_windows.bat
 ```
 
 产物位置：
@@ -565,15 +565,15 @@ dist\YYYY.MM.DD HH-mm-ss\JobsMockTool\JobsMockTool.exe
 
 ---
 
-### <span id="jobs-toc-heading-44" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-44" data-jobs-toc="v2">[【Windows】📦生成exe.bat/【Windows】📦生成exe.bat](./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 从仓库根目录进入 JobsMockTool 的 Windows 构建流程。
 
-* 调用同仓 `build_windows.bat`，原样转交参数。
+* 调用同仓 `【Windows】build_windows.bat/【Windows】build_windows.bat`，原样转交参数。
 * 由构建器展示说明并确认，随后准备依赖、清理旧产物并生成 EXE 目录。
 * 构建器打开成品目录并启动 EXE，外层返回相同退出状态。
 
-### <span id="jobs-toc-heading-45" data-jobs-toc="v2">[build_windows.bat](./build_windows.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-45" data-jobs-toc="v2">[【Windows】build_windows.bat/【Windows】build_windows.bat](./【Windows】build_windows.bat/【Windows】build_windows.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成包含 QtWebEngine 的 JobsMockTool EXE 分发目录。
 
@@ -700,11 +700,11 @@ GET /api/orders
 JobsMockTool/
 ├── app.py
 ├── requirements.txt
-├── 【MacOS】📦生成dmg.command
-├── build_macos.command/
-│   ├── build_macos.command
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【MacOS】build_macos.command/
+│   ├── 【MacOS】build_macos.command
 │   └── README.md
-├── build_windows.bat
+├── 【Windows】build_windows.bat/【Windows】build_windows.bat
 ├── README.md
 └── examples/
     └── sample_config_shared_port.json
@@ -714,9 +714,9 @@ JobsMockTool/
 | --- | --- |
 | `app.py` | 主程序源码。 |
 | `requirements.txt` | Python 依赖。 |
-| `【MacOS】📦生成dmg.command` | macOS `.app` / `.dmg` 打包入口。 |
-| `build_macos.command/build_macos.command` | 内层 macOS 构建器，执行环境自检、构建和产物展示。 |
-| `build_windows.bat` | Windows `.exe` 打包脚本。 |
+| `【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command` | macOS `.app` / `.dmg` 打包入口。 |
+| `【MacOS】build_macos.command/【MacOS】build_macos.command` | 内层 macOS 构建器，执行环境自检、构建和产物展示。 |
+| `【Windows】build_windows.bat/【Windows】build_windows.bat` | Windows `.exe` 打包脚本。 |
 | `README.md` | 全量说明文档。 |
 | `examples/sample_config_shared_port.json` | 多接口单端口示例配置。 |
 
@@ -735,7 +735,7 @@ JobsMockTool/
 
 必需依赖缺失时，直接回车联网安装；输入任意字符后回车取消整个流程。安装失败或复检仍不可用时停止，不继续清理旧产物或打包。健康依赖直接复用；可选升级和词库更新仍为回车跳过、任意字符执行。
 
-第一层平台打包入口为 `./【MacOS】📦生成dmg.command` 和 `./【Windows】📦生成exe.bat`，分别转交现有构建器；无需先进入同名脚本文件夹。
+第一层平台打包入口为 `./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command` 和 `./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat`，分别转交现有构建器；无需先进入同名脚本文件夹。
 
 第一层交付目录与平台打包脚本同层保存 `dist/`，以及最新 APP / DMG 的相对符号链接（Mac）或 EXE / 分发包的 `.lnk`（Windows）。双击快捷方式即可接触成品，真实文件保留在 `dist/`；成功构建自动更新入口，清理旧产物时移除对应旧入口。尚无成品时不生成无效快捷方式。
 
@@ -754,14 +754,14 @@ JobsMockTool/
 ```text
 .
 ├── .gitignore
-├── 【MacOS】📦生成dmg.command
-├── 【Windows】📦生成exe.bat
+├── 【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
+├── 【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ├── app.py
 ├── assets/
-├── build_macos.command/
-│   ├── build_macos.command
+├── 【MacOS】build_macos.command/
+│   ├── 【MacOS】build_macos.command
 │   └── README.md
-├── build_windows.bat
+├── 【Windows】build_windows.bat/【Windows】build_windows.bat
 ├── examples/
 ├── icon.png
 ├── JobsMockTool.spec

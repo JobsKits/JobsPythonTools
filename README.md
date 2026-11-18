@@ -40,14 +40,16 @@
 
 独立 `.command` 入口先显示内置自述：标题红色加粗，编号正文蓝色且不加粗，非彩色终端显示纯文本；在终端回车确认后执行，`Ctrl+C` 取消，缺少可交互输入时停止。各工具的源码、文档与版本统一由本仓 [**Git**](https://git-scm.com/) 管理，日常维护见 [单仓管理与文档目录](#single-repository-management)。
 
+脚本规范覆盖、验证与待处理项见[脚本统一审查](./项目相关报告/脚本统一审查.md)。
+
 ## <span id="jobs-toc-heading-2" data-jobs-toc="v2">一、工具总览 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
 
 | 工具 | 目录 | 核心用途 | 主要入口 |
 | --- | --- | --- | --- |
-| `LANFileServer` | [功能与操作](./LANFileServer.py/README.md) | 临时 Python / 非临时 Nginx 文件共享、浏览器预览 / 下载、可选上传、二维码、项目聊天室与访问记录。 | [macOS](./LANFileServer.py/【MacOS】📦生成dmg.command) / [Windows](./LANFileServer.py/【Windows】📦生成exe.bat) 打包 |
-| `JobsMockTool` | [功能与操作](./JobsMockTool.py/README.md) | 多接口、单端口 / 独立端口、query / body / headers 条件响应、JSON 树形编辑、内置请求测试与配置保存。 | [macOS](./JobsMockTool.py/【MacOS】📦生成dmg.command) / [Windows](./JobsMockTool.py/【Windows】📦生成exe.bat)；[构建脚本](./JobsMockTool.py/build_macos.command/README.md) |
-| `JobsReverseIPA` | [功能与操作](./JobsReverseIPA.py/README.md) | 授权 IPA 静态分析、环境体检、资源 / 敏感字符串扫描，输出 HTML / JSON / Markdown 报告。 | [macOS](./JobsReverseIPA.py/【MacOS】📦生成dmg.command) / [Windows](./JobsReverseIPA.py/【Windows】📦生成exe.bat) 打包 |
-| `JobsAppTrafficMonitor` | [功能与操作](./JobsAppTrafficMonitor.py/README.md) | macOS 用 nettop、Windows 用 ETW 按 App / 进程统计速率与收发字节；Windows 采集需管理员权限。 | [macOS](./JobsAppTrafficMonitor.py/【MacOS】📦生成dmg.command) / [Windows](./JobsAppTrafficMonitor.py/【Windows】📦生成exe.bat) 打包 |
+| `LANFileServer` | [功能与操作](./LANFileServer.py/README.md) | 临时 Python / 非临时 Nginx 文件共享、浏览器预览 / 下载、可选上传、二维码、项目聊天室与访问记录。 | [macOS](./LANFileServer.py/【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command) / [Windows](./LANFileServer.py/【Windows】📦生成exe.bat/【Windows】📦生成exe.bat) 打包 |
+| `JobsMockTool` | [功能与操作](./JobsMockTool.py/README.md) | 多接口、单端口 / 独立端口、query / body / headers 条件响应、JSON 树形编辑、内置请求测试与配置保存。 | [macOS](./JobsMockTool.py/【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command) / [Windows](./JobsMockTool.py/【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)；[构建脚本](./JobsMockTool.py/【MacOS】build_macos.command/README.md) |
+| `JobsReverseIPA` | [功能与操作](./JobsReverseIPA.py/README.md) | 授权 IPA 静态分析、环境体检、资源 / 敏感字符串扫描，输出 HTML / JSON / Markdown 报告。 | [macOS](./JobsReverseIPA.py/【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command) / [Windows](./JobsReverseIPA.py/【Windows】📦生成exe.bat/【Windows】📦生成exe.bat) 打包 |
+| `JobsAppTrafficMonitor` | [功能与操作](./JobsAppTrafficMonitor.py/README.md) | macOS 用 nettop、Windows 用 ETW 按 App / 进程统计速率与收发字节；Windows 采集需管理员权限。 | [macOS](./JobsAppTrafficMonitor.py/【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command) / [Windows](./JobsAppTrafficMonitor.py/【Windows】📦生成exe.bat/【Windows】📦生成exe.bat) 打包 |
 | `JobsSystemMonitor` | [功能与操作](./JobsSystemMonitor.py/README.md) | CPU / GPU / 内存 / 上下行速率、历史趋势、网卡选择、刷新间隔；macOS 菜单栏与 Windows 监控条 / 托盘。 | 双端打包入口，Windows 桌面行为需目标机验收 |
 | `JobsRemoteHost` | [功能与操作](./JobsRemoteHost.py/README.md) | 浏览器发起观看 / 控制申请，本机弹窗授权；局域网地址 / 临时公网链接、菜单栏 / 托盘驻留及停止服务。 | 双端打包、源码运行及协议自检入口见功能说明 |
 | `JobsCodexAccountSwitcher` | `./JobsCodexAccountSwitcher.py/` | 保存 Codex 文件登录态（口令保护可选）、退出后切换与重启；桌面兼容需核验。 | [说明](./JobsCodexAccountSwitcher.py/README.md)、双端打包入口 |
@@ -88,7 +90,7 @@
 macOS 安装包必须在 macOS 本机生成。进入目标工具目录后，双击或执行对应入口：
 
 ```shell
-./【MacOS】📦生成dmg.command
+./【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command
 ```
 
 脚本通常会创建或复用 `.venv` / `.venv-universal2`，按需安装依赖，再通过 [**PyInstaller**](https://pyinstaller.org/) 生成 `.app` 和 `.dmg`。涉及清理旧 `build` / `dist` 的脚本，会在内部自述里提示影响范围，部分工具要求输入 `YES` 才继续。
@@ -98,7 +100,7 @@ macOS 安装包必须在 macOS 本机生成。进入目标工具目录后，双�
 Windows 可执行程序必须在 Windows 本机生成或启动。进入目标工具目录后，双击或执行对应入口：
 
 ```shell
-./【Windows】📦生成exe.bat
+./【Windows】📦生成exe.bat/【Windows】📦生成exe.bat
 ```
 
 本仓 10 个自维护 BAT 入口在 `setlocal` 范围内限定 Python 使用 UTF-8；安装、构建与源码运行的子进程继承该设置，退出后不改用户或系统环境。三个 Python 内层构建器也为直接调用、标准流重定向和日志设置 UTF-8，避免 GBK 无法输出符号或路径导致中断。
@@ -216,8 +218,8 @@ node "$(git config --local --get jobs.markdown-toc-tool)" verify
 ├── JobsAppTrafficMonitor.py/  # 本仓普通源码目录
 ├── JobsCodexAccountSwitcher.py/  # 本仓普通源码目录
 ├── JobsCodexTokenMonitor.py/
-│   ├── 【MacOS】📦生成dmg.command
-│   ├── 【Windows】📦生成exe.bat
+│   ├── 【MacOS】📦生成dmg.command/
+│   ├── 【Windows】📦生成exe.bat/
 │   ├── icon.png
 │   ├── JobsCodexTokenMonitor/
 │   └── README.md
@@ -233,7 +235,7 @@ node "$(git config --local --get jobs.markdown-toc-tool)" verify
   * [JobsAppTrafficMonitor.py](./JobsAppTrafficMonitor.py/README.md)、[JobsCodexAccountSwitcher.py](./JobsCodexAccountSwitcher.py/README.md)、[JobsMockTool.py](./JobsMockTool.py/README.md)、[JobsRemoteHost.py](./JobsRemoteHost.py/README.md)、[JobsReverseIPA.py](./JobsReverseIPA.py/README.md)、[JobsSystemMonitor.py](./JobsSystemMonitor.py/README.md)、[LANFileServer.py](./LANFileServer.py/README.md)。
 * `JobsCodexTokenMonitor.py/` 当前是本仓内普通工具目录，保存独立用量监控源码、资源和平台入口；下列流程由本仓统一列出。
 
-### <span id="jobs-toc-heading-14" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./JobsCodexTokenMonitor.py/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-14" data-jobs-toc="v2">[【MacOS】📦生成dmg.command](./JobsCodexTokenMonitor.py/【MacOS】📦生成dmg.command/【MacOS】📦生成dmg.command)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在本机生成 JobsCodexTokenMonitor 的 APP / DMG，并打开本次成品。
 
@@ -243,7 +245,7 @@ node "$(git config --local --get jobs.markdown-toc-tool)" verify
 * 打包并校验 APP，封装 DMG，统一输出到 `dist/YYYY.MM.DD HH-mm-ss/`。
 * 更新第一层产物快捷方式，打开产物目录，再启动本次 APP；失败时查看系统临时目录中的构建日志。
 
-### <span id="jobs-toc-heading-15" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./JobsCodexTokenMonitor.py/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
+### <span id="jobs-toc-heading-15" data-jobs-toc="v2">[【Windows】📦生成exe.bat](./JobsCodexTokenMonitor.py/【Windows】📦生成exe.bat/【Windows】📦生成exe.bat)</span><!-- jobs-toc:heading-end -->
 
 > **目的：** 在 Windows 本机生成 JobsCodexTokenMonitor 的 EXE 分发目录与 ZIP。
 

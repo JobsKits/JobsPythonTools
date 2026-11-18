@@ -1,0 +1,43 @@
+# `【MacOS】📦生成dmg.command`
+
+![Jobs出品，必属精品](https://picsum.photos/1500/400)
+
+<!-- jobs-toc:start -->
+<!-- jobs-toc:source {"v":2,"token":"[toc]"} -->
+<details>
+<summary>📚 目录（点击展开 / 收起）</summary>
+
+- [🔥 前言](#%E5%89%8D%E8%A8%80)
+- [一、运行与依赖](#jobs-toc-heading-2)
+- [二、产物、日志与边界](#jobs-toc-heading-3)
+
+</details>
+<!-- jobs-toc:end -->
+
+---
+
+## 🔥 <span id="前言">前言</span>
+
+LANFileServer 的 MacOS 本机打包入口，用于生成本工具的 APP / DMG。完整功能与系统限制见[工具说明](../README.md)。
+
+## <span id="jobs-toc-heading-2" data-jobs-toc="v2">一、运行与依赖 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+双击同目录脚本，或从本 README 所在目录执行：
+
+```shell
+'./【MacOS】📦生成dmg.command'
+```
+
+系统 zsh，及脚本检查的 Python / 打包工具；缺失工具按入口现有确认与复检流程准备。
+
+保留文件服务器的一键打包入口：显示自述后转交项目启动器。运行会准备环境并生成产物，需在确定要打包时执行；Ctrl+C 可中止。
+
+
+## <span id="jobs-toc-heading-3" data-jobs-toc="v2">二、产物、日志与边界 <a href="#前言" style="font-size:17px; color:green;"><b>🔼</b></a> <a href="#🔚" style="font-size:17px; color:green;"><b>🔽</b></a></span><!-- jobs-toc:heading-end -->
+
+- 项目路径从脚本实际位置解析，完整工具目录复制或改名后仍按相对结构定位；不要只拷贝一个包装入口。
+- 构建可能联网准备依赖，并清理本工具固定 `dist` 中的旧产物。真实产物、时间目录和最新快捷方式由实际构建器维护，保留原有保护；不会因为新增脚本包装目录而改变交付层位置。
+- 日志沿用该工具在系统临时目录中的构建日志及内层命令诊断；路径由运行时自述显示。失败时保留原始错误，不把已有旧包当作本次成功产物。
+- MacOS 成品在 MacOS 构建，Windows 成品在 Windows 构建；完成路径与语法检查不代表真实打包、安装或跨机运行已验收。
+
+<a id="🔚" href="#前言" style="font-size:17px; color:green; font-weight:bold;">我是有底线的➤点我回到首页</a>

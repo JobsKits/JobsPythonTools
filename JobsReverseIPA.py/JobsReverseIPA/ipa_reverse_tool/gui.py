@@ -375,8 +375,8 @@ class MainWindow(QMainWindow):
         base_dir = app_base_dir()
         if platform.system() == "Darwin":
             candidates = [
-                base_dir / "doctor" / "macos" / "IPA环境体检.command",
-                base_dir.parent / "Resources" / "doctor" / "macos" / "IPA环境体检.command",
+                base_dir / "doctor" / "macos" / "【MacOS】IPA环境体检.command/【MacOS】IPA环境体检.command",
+                base_dir.parent / "Resources" / "doctor" / "macos" / "【MacOS】IPA环境体检.command/【MacOS】IPA环境体检.command",
             ]
             for candidate in candidates:
                 if candidate.exists():

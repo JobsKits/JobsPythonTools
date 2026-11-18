@@ -19,9 +19,9 @@
 
 | 文件 | 职责 |
 | --- | --- |
-| [build.py](./build.py) | [**Python**](https://www.python.org/) 3.11+ 本机构建入口；先自述与确认，再检查依赖、清理本工具固定 `dist`、调用 [**PyInstaller**](https://pyinstaller.org/) 并校验产物。 |
-| [launch.py](./launch.py) | 应用源码 / 冻结入口，转交当前工具的 Python 包。 |
-| [artifact_shortcuts.py](./artifact_shortcuts.py) | 只清理指向本工具 `dist` 的旧快捷方式，在真实产物通过校验后发布第一层入口。 |
+| [build.py](./build.py/build.py) | [**Python**](https://www.python.org/) 3.11+ 本机构建入口；先自述与确认，再检查依赖、清理本工具固定 `dist`、调用 [**PyInstaller**](https://pyinstaller.org/) 并校验产物。 |
+| [launch.py](./launch.py/launch.py) | 应用源码 / 冻结入口，转交当前工具的 Python 包。 |
+| [artifact_shortcuts.py](./artifact_shortcuts.py/artifact_shortcuts.py) | 只清理指向本工具 `dist` 的旧快捷方式，在真实产物通过校验后发布第一层入口。 |
 
 通常使用[外层平台入口](../../README.md)构建。直接运行 `build.py` 同样需要交互确认；`--help` 只显示参数，不构建或清理。构建只处理当前工具，成功后打开产物目录并启动本次软件；失败停止，不启动旧包。
 
